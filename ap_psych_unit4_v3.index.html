@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Psychology — Unit 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --paper: #f5f0e8;
+    --cream: #ede8da;
+    --accent: #c0392b;
+    --gold: #b8860b;
+    --muted: #7a6e5f;
+    --card-bg: #faf7f2;
+    --border: #d4c9b0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  /* HEADER */
+  header { background: var(--ink); color: var(--paper); padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+  header::before { content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px; border-radius:50%; border:40px solid rgba(192,57,43,0.15); }
+  header::after  { content:''; position:absolute; bottom:-40px; left:10%; width:140px; height:140px; border-radius:50%; border:28px solid rgba(184,134,11,0.1); }
+  .header-label { font-family:'DM Mono',monospace; font-size:0.68rem; letter-spacing:0.2em; color:var(--accent); text-transform:uppercase; margin-bottom:0.5rem; }
+  header h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,5vw,3rem); font-weight:700; line-height:1.1; position:relative; z-index:1; }
+  header h1 em { font-style:italic; color:#c0956e; }
+  .header-sub { margin-top:0.5rem; font-size:0.8rem; color:#a89880; font-family:'DM Mono',monospace; letter-spacing:0.05em; }
+  .header-badge { display:inline-block; margin-top:0.8rem; background:var(--accent); color:white; font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.25rem 0.7rem; border-radius:2px; }
+
+  /* NAV */
+  nav { background:var(--cream); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; padding:0 0.8rem; scrollbar-width:none; position:sticky; top:0; z-index:100; }
+  nav::-webkit-scrollbar { display:none; }
+  nav button { background:none; border:none; border-bottom:3px solid transparent; padding:0.9rem 1rem 0.75rem; font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); cursor:pointer; white-space:nowrap; transition:all 0.2s; }
+  nav button:hover { color:var(--ink); }
+  nav button.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:500; }
+
+  /* LAYOUT */
+  main { max-width:900px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+  .section { display:none; }
+  .section.active { display:block; }
+  .section-title { font-family:'Playfair Display',serif; font-size:1.75rem; margin-bottom:0.25rem; }
+  .section-desc { color:var(--muted); font-size:0.8rem; margin-bottom:1.8rem; font-family:'DM Mono',monospace; letter-spacing:0.03em; }
+  .sub-head { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; margin:1.8rem 0 0.8rem; }
+  hr.div { border:none; border-top:1px solid var(--border); margin:1.6rem 0; }
+
+  /* LT BADGE */
+  .lt { display:inline-block; font-family:'DM Mono',monospace; font-size:0.56rem; letter-spacing:0.1em; text-transform:uppercase; background:var(--ink); color:var(--paper); padding:0.15rem 0.5rem; border-radius:2px; margin-bottom:0.5rem; }
+
+  /* CARDS */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1.1rem; margin-bottom:1.8rem; }
+  .card { background:var(--card-bg); border:1px solid var(--border); border-radius:3px; padding:1.3rem; transition:transform 0.15s,box-shadow 0.15s; }
+  .card:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+  .card-num { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem; }
+  .card h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; margin-bottom:0.45rem; }
+  .card p { font-size:0.8rem; line-height:1.6; color:#4a3f32; }
+  .card .tag { display:inline-block; margin-top:0.7rem; font-family:'DM Mono',monospace; font-size:0.57rem; letter-spacing:0.1em; text-transform:uppercase; background:var(--cream); color:var(--muted); border:1px solid var(--border); padding:0.18rem 0.45rem; border-radius:2px; }
+
+  /* ACCORDION */
+  .accordion-item { border:1px solid var(--border); border-radius:3px; margin-bottom:0.55rem; overflow:hidden; }
+  .accordion-header { background:var(--card-bg); padding:0.9rem 1.2rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; border:none; width:100%; text-align:left; gap:0.5rem; transition:background 0.15s; }
+  .accordion-header:hover { background:var(--cream); }
+  .accordion-header-left { display:flex; flex-direction:column; gap:0.15rem; }
+  .accordion-title { font-family:'Playfair Display',serif; font-size:0.98rem; font-weight:700; }
+  .accordion-icon { font-size:1.1rem; color:var(--muted); transition:transform 0.2s; flex-shrink:0; }
+  .accordion-item.open .accordion-icon { transform:rotate(45deg); }
+  .accordion-body { display:none; padding:0 1.3rem 1.3rem; background:var(--card-bg); font-size:0.8rem; line-height:1.65; color:#4a3f32; }
+  .accordion-item.open .accordion-body { display:block; }
+
+  /* INFO BOXES */
+  .box { border-radius:3px; padding:0.9rem 1.1rem; margin:0.9rem 0; font-size:0.79rem; line-height:1.6; }
+  .box-label { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.35rem; }
+  .box.gold { background:#fdf8ec; border-left:4px solid var(--gold); }
+  .box.gold .box-label { color:var(--gold); }
+  .box.red  { background:#fdf0ef; border-left:4px solid var(--accent); }
+  .box.red .box-label  { color:var(--accent); }
+  .box.dark { background:var(--ink); color:var(--paper); border-left:4px solid var(--accent); }
+  .box.dark .box-label { color:#c0956e; }
+  .box.dark strong { color:#f5f0e8; }
+
+  /* TABLES */
+  table.t { width:100%; border-collapse:collapse; font-size:0.78rem; margin-top:0.8rem; }
+  table.t th { background:var(--ink); color:var(--paper); font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.55rem 0.8rem; text-align:left; }
+  table.t td { padding:0.55rem 0.8rem; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+  table.t tr:nth-child(even) td { background:var(--cream); }
+  .tname { font-family:'Playfair Display',serif; font-weight:700; font-size:0.88rem; }
+
+  /* TERM LIST */
+  .terms { display:grid; gap:0.6rem; }
+  .term { background:var(--card-bg); border:1px solid var(--border); border-left:4px solid var(--gold); padding:0.8rem 1.1rem; border-radius:0 3px 3px 0; display:grid; grid-template-columns:200px 1fr; gap:0.9rem; align-items:start; }
+  @media(max-width:580px){ .term { grid-template-columns:1fr; gap:0.25rem; } }
+  .tname2 { font-family:'Playfair Display',serif; font-size:0.9rem; font-weight:700; }
+  .tdef { font-size:0.78rem; color:#4a3f32; line-height:1.55; }
+
+  /* DEFENSE MECH GRID */
+  .dm-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(195px,1fr)); gap:0.75rem; margin-top:0.8rem; }
+  .dm { background:white; border:1px solid var(--border); padding:0.85rem; border-radius:3px; }
+  .dm-name { font-family:'Playfair Display',serif; font-size:0.88rem; font-weight:700; margin-bottom:0.25rem; }
+  .dm-def { font-size:0.75rem; color:#4a3f32; line-height:1.5; }
+  .dm-ex { font-size:0.7rem; color:var(--muted); margin-top:0.25rem; font-style:italic; }
+
+  /* THEORIST CARDS */
+  .theorist { background:var(--card-bg); border:1px solid var(--border); border-top:5px solid var(--accent); padding:1.3rem; border-radius:0 0 3px 3px; margin-bottom:0.9rem; }
+  .th-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; margin-bottom:0.15rem; }
+  .th-era { font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.7rem; }
+  .th-body { font-size:0.79rem; line-height:1.65; color:#4a3f32; }
+  .th-body strong { color:var(--ink); }
+  .chips { margin-top:0.7rem; display:flex; flex-wrap:wrap; gap:0.35rem; }
+  .chip { background:var(--ink); color:var(--paper); font-family:'DM Mono',monospace; font-size:0.57rem; letter-spacing:0.07em; padding:0.2rem 0.55rem; border-radius:2px; }
+
+  /* EXPERIMENT CARDS */
+  .exp { background:var(--card-bg); border:1px solid var(--border); padding:1.2rem 1.4rem; margin-bottom:0.9rem; border-radius:3px; }
+  .exp-name { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; }
+  .exp-meta { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; margin:0.2rem 0 0.65rem; }
+  .exp-body { font-size:0.79rem; line-height:1.6; color:#4a3f32; }
+  .exp-find { margin-top:0.7rem; background:var(--cream); border-left:3px solid var(--gold); padding:0.55rem 0.85rem; font-size:0.77rem; font-style:italic; }
+  .exp-ap { margin-top:0.5rem; background:#fdf0ef; border-left:3px solid var(--accent); padding:0.5rem 0.85rem; font-size:0.75rem; color:#6b1a14; }
+
+  /* MASLOW */
+  .maslow { margin:1rem 0; }
+  .ml { display:flex; align-items:center; justify-content:center; font-size:0.76rem; font-weight:500; color:white; padding:0.55rem; margin:0 auto 3px; border-radius:2px; text-align:center; transition:transform 0.15s; cursor:default; }
+  .ml:hover { transform:scaleX(1.015); }
+
+  /* EMOTION THEORIES TABLE */
+  .emo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:0.8rem; margin-top:0.8rem; }
+  .emo-card { background:var(--card-bg); border:1px solid var(--border); border-top:4px solid var(--gold); padding:1rem; border-radius:0 0 3px 3px; }
+  .emo-name { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; margin-bottom:0.3rem; }
+  .emo-def { font-size:0.77rem; line-height:1.55; color:#4a3f32; }
+
+  /* FLASHCARDS */
+  .fc-wrap { perspective:1000px; margin-bottom:1.3rem; }
+  .fc { width:100%; max-width:620px; height:175px; position:relative; cursor:pointer; transform-style:preserve-3d; transition:transform 0.42s; margin:0 auto; }
+  .fc.flipped { transform:rotateY(180deg); }
+  .fc-front,.fc-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.4rem; text-align:center; }
+  .fc-front { background:var(--ink); color:var(--paper); }
+  .fc-back  { background:var(--accent); color:white; transform:rotateY(180deg); }
+  .fc-lbl { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; opacity:0.6; margin-bottom:0.4rem; }
+  .fc-term { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; }
+  .fc-def  { font-size:0.8rem; line-height:1.5; }
+  .fc-ctrls { display:flex; gap:0.7rem; justify-content:center; margin-top:0.7rem; }
+  .fc-btn { background:var(--card-bg); border:1px solid var(--border); font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.45rem 0.9rem; border-radius:2px; cursor:pointer; transition:all 0.15s; }
+  .fc-btn:hover { background:var(--cream); border-color:var(--ink); }
+  .fc-count { font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--muted); text-align:center; margin-top:0.35rem; }
+
+  /* QUIZ */
+  .q-wrap { max-width:700px; }
+  .q-card { background:var(--card-bg); border:1px solid var(--border); padding:1.5rem; border-radius:3px; margin-bottom:1.3rem; }
+  .q-num { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--accent); text-transform:uppercase; margin-bottom:0.55rem; }
+  .q-text { font-family:'Playfair Display',serif; font-size:0.97rem; line-height:1.5; margin-bottom:1rem; }
+  .q-opts { display:grid; gap:0.45rem; }
+  .q-opt { background:white; border:1.5px solid var(--border); padding:0.65rem 0.9rem; border-radius:3px; cursor:pointer; font-size:0.79rem; line-height:1.4; transition:all 0.15s; text-align:left; font-family:'DM Sans',sans-serif; }
+  .q-opt:hover { border-color:var(--ink); background:var(--cream); }
+  .q-opt.correct { background:#e8f5e9; border-color:#388e3c; color:#1b5e20; }
+  .q-opt.wrong   { background:#fdecea; border-color:#c62828; color:#7f0000; }
+  .q-opt.show-c  { background:#e8f5e9; border-color:#388e3c; color:#1b5e20; opacity:0.65; }
+  .q-exp { margin-top:0.7rem; font-size:0.75rem; color:var(--muted); font-style:italic; display:none; line-height:1.5; }
+  .q-exp.show { display:block; }
+  .q-score { background:var(--ink); color:var(--paper); padding:1.4rem 1.8rem; border-radius:3px; display:none; }
+  .q-score.show { display:block; }
+  .score-big { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:700; }
+  .score-lbl { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; color:#a89880; text-transform:uppercase; margin-bottom:0.35rem; }
+
+  .btn { display:inline-block; margin-top:0.9rem; background:var(--accent); color:white; font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; border:none; padding:0.55rem 1.2rem; border-radius:2px; cursor:pointer; transition:opacity 0.2s; }
+  .btn:hover { opacity:0.85; }
+
+  /* ANIM */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .section.active > * { animation:fadeUp 0.28s ease both; }
+
+  /* PILL */
+  .pills { display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.7rem; }
+  .pill { background:var(--cream); border:1px solid var(--border); font-family:'DM Mono',monospace; font-size:0.57rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.18rem 0.55rem; border-radius:20px; color:var(--muted); }
+  .pill.hot { background:#fdf0ef; border-color:#e8a09a; color:#8b2020; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">AP Psychology · Unit 4 · Myers' AP Course — All Learning Targets</div>
+  <h1>Social Psychology, Personality,<br><em>Motivation & Emotion</em></h1>
+  <p class="header-sub">4.1 – 4.8 · All learning targets covered</p>
+  <span class="header-badge">v3 — Full Learning Target Alignment</span>
+</header>
+
+<nav id="nav">
+  <button class="active" onclick="show('overview')">Overview</button>
+  <button onclick="show('attribution')">4.1 Attribution</button>
+  <button onclick="show('attitudes')">4.2 Attitudes</button>
+  <button onclick="show('social')">4.3 Social Situations</button>
+  <button onclick="show('personality')">4.4–4.5 Personality</button>
+  <button onclick="show('defense')">Defense Mechs</button>
+  <button onclick="show('traits')">4.6 Traits</button>
+  <button onclick="show('motivation')">4.7 Motivation</button>
+  <button onclick="show('emotion')">4.8 Emotion</button>
+  <button onclick="show('theorists')">Theorists</button>
+  <button onclick="show('studies')">Studies</button>
+  <button onclick="show('terms')">Key Terms</button>
+  <button onclick="show('flashcards')">Flashcards</button>
+  <button onclick="show('quiz')">Quiz</button>
+</nav>
+
+<main>
+
+<!-- ======== OVERVIEW ======== -->
+<section id="overview" class="section active">
+  <h2 class="section-title">Unit 4 — Full Overview</h2>
+  <p class="section-desc">Myers' Psychology for the AP® Course · Modules 4.1 – 4.8</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-num">4.1</div><h3>Attribution & Person Perception</h3><p>How we explain others' behavior, form impressions, and develop prejudice — explicit and implicit.</p><span class="tag">FAE · Implicit Bias · Prejudice</span></div>
+    <div class="card"><div class="card-num">4.2</div><h3>Attitude Formation & Change</h3><p>How attitudes and actions interact; central vs. peripheral routes to persuasion.</p><span class="tag">Dissonance · Persuasion</span></div>
+    <div class="card"><div class="card-num">4.3</div><h3>Psychology of Social Situations</h3><p>Conformity, obedience, group dynamics, aggression, attraction, altruism, conflict & peace.</p><span class="tag">Milgram · Asch · Altruism</span></div>
+    <div class="card"><div class="card-num">4.4–4.5</div><h3>Personality — Psychodynamic & Humanistic</h3><p>Freud's model, defense mechanisms, neo-Freudians, humanistic psychology (Rogers & Maslow).</p><span class="tag">Freud · Rogers · Maslow</span></div>
+    <div class="card"><div class="card-num">4.6</div><h3>Trait & Social-Cognitive Theories</h3><p>Big Five, personality inventories, Bandura's reciprocal determinism, self-efficacy, locus of control.</p><span class="tag">OCEAN · Bandura · Mischel</span></div>
+    <div class="card"><div class="card-num">4.7</div><h3>Motivation</h3><p>Instinct, drive-reduction, arousal, hierarchy of needs, belongingness, achievement motivation, hunger.</p><span class="tag">Maslow · Need to Belong · Hunger</span></div>
+    <div class="card"><div class="card-num">4.8</div><h3>Emotions</h3><p>Theories of emotion, physiological arousal, nonverbal communication, facial feedback, cultural universals.</p><span class="tag">James-Lange · Cannon-Bard · Schachter</span></div>
+    <div class="card"><div class="card-num">All</div><h3>Flashcards + Practice Quiz</h3><p>40 flashcards covering every major term; 18 AP-style multiple choice questions across all modules.</p><span class="tag">Review · Self-Test</span></div>
+  </div>
+  <div class="box dark">
+    <div class="box-label">⚡ Top AP Exam Tips</div>
+    <ul style="font-size:0.81rem;line-height:1.9;padding-left:1.2rem;color:#e0d5c5;">
+      <li>Know <strong>FAE vs. self-serving bias vs. actor-observer bias</strong> — all commonly confused on FRQs</li>
+      <li>Distinguish <strong>conformity</strong> (Asch, peer pressure) from <strong>obedience</strong> (Milgram, authority)</li>
+      <li>Memorize <strong>OCEAN</strong> with high/low descriptions for each trait</li>
+      <li>Know all major <strong>defense mechanisms</strong> with a concrete example</li>
+      <li>Three emotion theories: <strong>James-Lange, Cannon-Bard, Schachter-Singer</strong> — order of events differs</li>
+      <li>Motivation theories: <strong>instinct, drive-reduction, arousal, hierarchy of needs</strong></li>
+      <li><strong>Need to belong</strong> is tested — know its effects on health and behavior</li>
+      <li>Projective tests = <strong>low reliability & validity</strong>; self-report = social desirability bias</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== 4.1 ATTRIBUTION ======== -->
+<section id="attribution" class="section">
+  <h2 class="section-title">4.1 Attribution Theory & Person Perception</h2>
+  <p class="section-desc">LTs 4.1-1 through 4.1-5 · How we perceive and explain others</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.1-1 · 4.1-2</span><span class="accordion-title">Person Perception & Attribution</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Person perception</strong>: The process of forming impressions of others. We quickly judge people using limited information — thin slices of behavior often predict overall personality.</p>
+      <p style="margin-top:0.7rem;"><strong>Attribution theory</strong> (Heider): We explain behavior as caused by <em>internal (dispositional)</em> factors — personality, ability, effort — or <em>external (situational)</em> factors — circumstances, luck, environment.</p>
+      <div class="box gold" style="margin-top:0.8rem;">
+        <div class="box-label">Three Key Biases — Know All Three</div>
+        <strong>Fundamental Attribution Error (FAE):</strong> When judging <em>others</em>, we overestimate dispositional causes and underestimate situational causes.<br><br>
+        <strong>Self-serving bias:</strong> We attribute our <em>own</em> successes to internal factors ("I'm smart") and failures to external ones ("The test was unfair") — protects self-esteem.<br><br>
+        <strong>Actor-observer bias:</strong> We explain our own behavior situationally ("I was tired") but others' dispositionally ("She's always rude").
+      </div>
+      <p style="margin-top:0.8rem;"><strong>Social comparison</strong> (Festinger): We evaluate our opinions and abilities by comparing ourselves to others. Upward comparison (comparing to someone better) can motivate or depress; downward comparison (comparing to someone worse) boosts self-esteem. Shapes our self-perception profoundly.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.1-3 · 4.1-4</span><span class="accordion-title">Prejudice — Explicit vs. Implicit</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Prejudice</strong>: An unjustified negative attitude toward a group and its members. Has three components: <em>stereotype</em> (cognitive belief), <em>prejudice</em> (emotional attitude), <em>discrimination</em> (behavioral action).</p>
+      <p style="margin-top:0.7rem;"><strong>Explicit prejudice</strong>: Conscious, deliberate negative attitudes — the person is aware of and endorses the bias.</p>
+      <p style="margin-top:0.5rem;"><strong>Implicit prejudice</strong>: Unconscious, automatic bias — measured by the <strong>Implicit Association Test (IAT)</strong>, which reveals reaction-time differences when pairing concepts. People can hold implicit biases they sincerely deny holding.</p>
+      <p style="margin-top:0.7rem;"><strong>Group distinctions that elicit prejudice:</strong><br>
+      • <em>Race and ethnicity</em> — most studied; linked to in-group bias and historical power structures<br>
+      • <em>Gender</em> — sexism; gender stereotypes affect expectations and evaluations<br>
+      • <em>Age</em> — ageism; stereotypes about the elderly and the young<br>
+      • <em>Sexual orientation</em> — homophobia; often implicit even among those who explicitly report tolerance<br>
+      • <em>Physical appearance</em> — attractiveness bias; "beautiful is good" heuristic</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.1-5</span><span class="accordion-title">Roots of Prejudice — Social, Emotional & Cognitive</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Social roots:</strong><br>
+      • <em>Social identity theory</em> (Tajfel & Turner): We categorize ourselves and others into groups, then favor the in-group to boost self-esteem. Even minimal group assignments ("red team") produce in-group bias.<br>
+      • <em>In-group vs. out-group</em>: Out-group homogeneity — "they all look alike to us." In-group bias — favoritism toward own group.<br>
+      • <em>Conformity to social norms</em>: We absorb prejudices from culture, family, and media.</p>
+      <p style="margin-top:0.7rem;"><strong>Emotional roots:</strong><br>
+      • <em>Scapegoat theory</em>: When frustrated, people displace aggression onto a weaker out-group.<br>
+      • <em>Just-world phenomenon</em>: Believing people get what they deserve leads to victim-blaming.</p>
+      <p style="margin-top:0.7rem;"><strong>Cognitive roots:</strong><br>
+      • <em>Categorization</em>: We simplify the social world by grouping people; once grouped, we exaggerate between-group differences.<br>
+      • <em>Vivid cases</em>: A single memorable out-group member confirms the stereotype (availability heuristic).<br>
+      • <em>Stereotype threat</em> (Steele): Awareness of a negative stereotype disrupts performance — a self-fulfilling prophecy of prejudice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 4.2 ATTITUDES ======== -->
+<section id="attitudes" class="section">
+  <h2 class="section-title">4.2 Attitude Formation & Change</h2>
+  <p class="section-desc">LTs 4.2-1 · 4.2-2 · How attitudes shape behavior and how we change them</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.2-1</span><span class="accordion-title">Attitudes ↔ Actions</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Attitudes</strong>: Favorable or unfavorable evaluative reactions toward something or someone. Composed of:<br>
+      • <em>Cognitive</em>: beliefs ("Smoking causes cancer")<br>
+      • <em>Affective</em>: feelings ("I find smoking disgusting")<br>
+      • <em>Behavioral</em>: tendency to act ("I avoid smokers")</p>
+      <p style="margin-top:0.7rem;"><strong>Do attitudes predict behavior?</strong> Sometimes — when attitudes are <em>specific</em> to the behavior, <em>strong</em>, and formed through <em>direct experience</em>.</p>
+      <p style="margin-top:0.7rem;"><strong>Do actions shape attitudes?</strong> Yes — this is the core of cognitive dissonance:</p>
+      <div class="box gold">
+        <div class="box-label">Cognitive Dissonance (Festinger, 1957)</div>
+        When our actions contradict our attitudes, we experience psychological tension. To reduce it we either change our <strong>attitude</strong> to match our behavior, add new cognitions to justify the behavior, or change the behavior. Classic example: "I smoke, but smoking is unhealthy" → "Well, it helps me relax" (rationalization).
+      </div>
+      <p style="margin-top:0.7rem;"><strong>Foot-in-the-door</strong>: Once we comply with a small request, our self-image shifts ("I'm the kind of person who does this"), making larger compliance more likely.<br>
+      <strong>Mere exposure effect</strong>: Repeated exposure to a stimulus — even without awareness — increases our liking of it.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.2-2</span><span class="accordion-title">Peripheral vs. Central Route Persuasion</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>The <strong>Elaboration Likelihood Model</strong> (Petty & Cacioppo) proposes two routes through which persuasion works:</p>
+      <table class="t" style="margin-top:0.8rem;">
+        <tr><th>Feature</th><th>Central Route</th><th>Peripheral Route</th></tr>
+        <tr><td>Process</td><td>Careful, logical analysis of arguments</td><td>Superficial cues (attractiveness, authority)</td></tr>
+        <tr><td>Audience</td><td>Motivated and able to think</td><td>Distracted or uninterested</td></tr>
+        <tr><td>Result</td><td>Durable attitude change</td><td>Temporary attitude change</td></tr>
+        <tr><td>Example</td><td>Reading a detailed policy brief</td><td>Buying a product because a celebrity endorses it</td></tr>
+      </table>
+      <p style="margin-top:0.8rem;"><strong>Elements of effective persuasion:</strong><br>
+      • <em>Source credibility</em>: Expert, trustworthy communicators are more persuasive<br>
+      • <em>Message</em>: Two-sided messages are more persuasive with informed audiences<br>
+      • <em>Channel</em>: Face-to-face more persuasive than written for complex topics<br>
+      • <em>Audience</em>: Young people and those with low self-esteem are more persuadable</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 4.3 SOCIAL SITUATIONS ======== -->
+<section id="social" class="section">
+  <h2 class="section-title">4.3 Psychology of Social Situations</h2>
+  <p class="section-desc">LTs 4.3-1 through 4.3-15 · Conformity, obedience, group behavior, aggression, attraction, altruism, conflict</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-1 · 4.3-2 · 4.3-3</span><span class="accordion-title">Conformity & Obedience</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Social contagion</strong>: Behaviors, emotions, and ideas spread through a group like a contagion — a form of automatic, unconscious conformity (laughter in a crowd, yawning, panic).</p>
+      <p style="margin-top:0.6rem;"><strong>Conformity</strong> (Asch, 1951): ~37% of trials produced conformity even when the answer was clearly wrong. Conformity increases with: group unanimity, group size (up to 3–5), public responses, low self-confidence. One ally reduces conformity dramatically.</p>
+      <p style="margin-top:0.6rem;"><strong>Normative influence</strong>: Conforming to fit in (public compliance, private disagreement).<br>
+      <strong>Informational influence</strong>: Conforming because you believe the group has better information.</p>
+      <p style="margin-top:0.6rem;"><strong>Obedience</strong> (Milgram, 1963): 65% administered maximum 450V shock. Obedience increased with: authority legitimacy, prestigious institution, victim at distance, no peer defiance model. Decreased with: victim proximity, peer refusal, no authority present.</p>
+      <div class="box red">
+        <div class="box-label">What social influence studies teach us (LT 4.3-3)</div>
+        These studies show that <strong>situational forces are far more powerful than we assume</strong>. We overestimate dispositional factors (the FAE) and underestimate how much context shapes behavior. BUT we also have power — a single dissenter breaks conformity; refusing to obey at lower levels prevents escalation.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-4 · 4.3-5 · 4.3-6</span><span class="accordion-title">Group Behavior: Facilitation, Loafing, Deindividuation, Polarization, Groupthink</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Social facilitation</strong> (Zajonc): Others' presence creates arousal → enhances easy/well-practiced tasks, impairs difficult/novel tasks. Explains why athletes perform better in front of crowds on mastered skills.</p>
+      <p style="margin-top:0.6rem;"><strong>Social loafing</strong>: Reduced effort in group tasks — accountability is diffused. More common in individualistic cultures; reduced by identifiable contributions.</p>
+      <p style="margin-top:0.6rem;"><strong>Deindividuation</strong>: Loss of self-awareness and restraint when in a group or anonymous setting (online trolling, mob violence, costumed behavior). People feel less responsible for individual actions.</p>
+      <p style="margin-top:0.6rem;"><strong>Group polarization</strong>: Discussion intensifies the group's average pre-existing attitude. Like-minded people become more extreme after talking — explains political echo chambers and online radicalization.</p>
+      <p style="margin-top:0.6rem;"><strong>Groupthink</strong> (Janis): Cohesive groups prioritize harmony over critical thinking. Symptoms: illusion of invulnerability, collective rationalization, self-censorship, pressure on dissenters, illusion of unanimity. Prevention: assign devil's advocate, seek outside opinions, use anonymous input.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-7</span><span class="accordion-title">Culture & Behavior</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Culture</strong> shapes behavior through norms, values, and roles. Cross-cultural research shows both universal patterns and significant cultural variation.</p>
+      <p style="margin-top:0.6rem;"><strong>Individualism vs. collectivism:</strong><br>
+      • <em>Individualist</em> (Western): Personal goals, independence, self-expression; attribute behavior dispositionally<br>
+      • <em>Collectivist</em> (East Asian, Latin American): Group goals, interdependence, harmony; more situational attributions and stronger conformity</p>
+      <p style="margin-top:0.6rem;"><strong>Norms</strong>: Unwritten rules about accepted behavior. Vary widely across cultures — what is polite in one culture is rude in another. Social roles (student, employee, parent) further shape behavior, sometimes overriding personal values (as Zimbardo's study showed).</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-8 · 4.3-9</span><span class="accordion-title">Aggression — Biological, Psychological & Social-Cultural</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Psychology's definition of aggression</strong>: Any physical or verbal behavior intended to hurt someone. Distinct from everyday usage — aggression is about intent, not just forcefulness.</p>
+      <p style="margin-top:0.7rem;"><strong>Biological factors:</strong><br>
+      • <em>Genetics</em>: Heritability of temperament and impulse control<br>
+      • <em>Neural</em>: Amygdala activation; reduced frontal lobe inhibition<br>
+      • <em>Biochemical</em>: High testosterone correlates with dominance-seeking; low serotonin reduces impulse control; alcohol weakens frontal lobe inhibition</p>
+      <p style="margin-top:0.7rem;"><strong>Psychological triggers (LT 4.3-9):</strong><br>
+      • <em>Frustration-aggression principle</em> (Dollard, 1939): Frustration (blocked goals) increases aggression, especially toward perceived sources<br>
+      • <em>Aversive events</em>: Pain, heat, crowding, unpleasant smells all increase irritability<br>
+      • <em>Arousal transfer</em>: Residual arousal from any source can intensify aggression</p>
+      <p style="margin-top:0.7rem;"><strong>Social-cultural triggers:</strong><br>
+      • <em>Observational learning</em>: Bandura's Bobo doll; exposure to aggressive models increases aggression<br>
+      • <em>Media violence</em>: Desensitizes; increases aggressive cognitions and behaviors (correlation + experimental evidence)<br>
+      • <em>Culture of honor</em>: In some cultures, aggressive responses to perceived disrespect are normative</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-10 · 4.3-11</span><span class="accordion-title">Attraction & Romantic Love</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Factors predicting attraction (LT 4.3-10):</strong><br>
+      • <em>Proximity</em>: Mere exposure — we like what is familiar; geographic closeness predicts friendship and romance<br>
+      • <em>Physical attractiveness</em>: "Beautiful is good" heuristic; physically attractive people are assumed to be more competent, happy, and successful; matching phenomenon — we tend to pair with those of similar attractiveness<br>
+      • <em>Similarity</em>: We are attracted to those who share our values, interests, and backgrounds ("birds of a feather")<br>
+      • <em>Reciprocal liking</em>: Knowing someone likes us increases our liking of them</p>
+      <p style="margin-top:0.8rem;"><strong>How romantic love changes over time (LT 4.3-11):</strong><br>
+      • <em>Passionate love</em>: Intense, aroused state of longing; associated with arousal, idealization, novelty; peaks early in relationship<br>
+      • <em>Companionate love</em>: Deep, affectionate attachment; based on trust, commitment, shared history; grows over time<br>
+      • Equity and self-disclosure sustain long-term relationships; Sternberg's triangular theory adds <em>intimacy</em>, <em>passion</em>, and <em>commitment</em> as components</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-12 · 4.3-13</span><span class="accordion-title">Altruism & Helping Behavior</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Altruism</strong>: Unselfish concern for the welfare of others. When are we most — and least — likely to help?</p>
+      <p style="margin-top:0.6rem;"><strong>Bystander effect</strong> (Darley & Latané): As the number of witnesses increases, each person's likelihood of helping decreases. Mechanisms:<br>
+      • <em>Diffusion of responsibility</em>: Each person feels less personally accountable<br>
+      • <em>Pluralistic ignorance</em>: Looking to others for cues; others' inaction signals "no emergency"</p>
+      <p style="margin-top:0.6rem;"><strong>Factors increasing helping:</strong> Alone (not in a crowd), unambiguous need, feeling similar to the victim, good mood, not in a hurry, smaller community.</p>
+      <p style="margin-top:0.6rem;"><strong>Social exchange theory (LT 4.3-13)</strong>: We help when the <em>perceived benefits</em> (social approval, reduced guilt, reciprocity) outweigh the <em>costs</em> (time, risk, effort). Helping is rational self-interest, not pure altruism.</p>
+      <p style="margin-top:0.6rem;"><strong>Social norms that motivate helping:</strong><br>
+      • <em>Reciprocity norm</em>: Help those who have helped you<br>
+      • <em>Social responsibility norm</em>: Help those who depend on you, even if they can't repay</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.3-14 · 4.3-15</span><span class="accordion-title">Social Conflict & Promoting Peace</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Social traps (LT 4.3-14)</strong>: Situations where individuals pursue self-interest in ways that are collectively destructive. Example: The Prisoner's Dilemma — both parties suffer if both defect, but individual incentive is to defect. Leads to arms races, pollution, depletion of shared resources.</p>
+      <p style="margin-top:0.6rem;"><strong>Mirror-image perceptions</strong>: Conflicting parties view each other in the same distorted, negative ways. Each side sees the other as evil and themselves as righteous — fuels conflict cycles.</p>
+      <p style="margin-top:0.7rem;"><strong>Promoting peace (LT 4.3-15):</strong><br>
+      • <em>Contact hypothesis</em>: Equal-status contact between groups reduces prejudice (Robbers Cave, Sherif)<br>
+      • <em>Superordinate goals</em>: Shared goals requiring cooperation unite rival groups<br>
+      • <em>GRIT</em> (Graduated Reciprocation in Tension-Reduction): One side makes small conciliatory gestures, inviting reciprocation — de-escalates conflict<br>
+      • <em>Mediation and communication</em>: Structured dialogue reduces misperceptions; negotiation works better than ultimatums</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 4.4–4.5 PERSONALITY ======== -->
+<section id="personality" class="section">
+  <h2 class="section-title">4.4–4.5 Personality — Psychodynamic & Humanistic</h2>
+  <p class="section-desc">LTs 4.4-1 · 4.5-1 through 4.5-8</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.4-1</span><span class="accordion-title">What Is Personality?</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Personality</strong>: An individual's characteristic pattern of thinking, feeling, and acting — relatively stable across time and situations.</p>
+      <p style="margin-top:0.6rem;">Four major theoretical frameworks:<br>
+      1. <strong>Psychoanalytic/Psychodynamic</strong> — unconscious drives, early childhood<br>
+      2. <strong>Humanistic</strong> — conscious experience, free will, growth<br>
+      3. <strong>Trait</strong> — stable, measurable characteristics (Big Five)<br>
+      4. <strong>Social-cognitive</strong> — interaction of person, behavior, environment</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.5-1</span><span class="accordion-title">Freud's View of Personality</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>Freud developed psychoanalysis from treating patients with <em>hysteria</em> — physical symptoms with no organic cause. Led him to hypothesize an <strong>unconscious mind</strong> where repressed conflicts resided.</p>
+      <p style="margin-top:0.6rem;"><strong>Three levels of mind:</strong> Conscious → Preconscious → Unconscious (the "iceberg")</p>
+      <p style="margin-top:0.6rem;"><strong>Structural model:</strong><br>
+      • <em>Id</em>: Unconscious; pleasure principle; demands immediate satisfaction; contains libido (life/sex drive) and thanatos (death/aggression drive)<br>
+      • <em>Ego</em>: Mostly conscious; reality principle; mediates between id's demands and reality<br>
+      • <em>Superego</em>: Internalized moral standards from parents; includes conscience (guilt) and ego-ideal (aspirations)</p>
+      <p style="margin-top:0.7rem;"><strong>Psychosexual stages:</strong></p>
+      <table class="t">
+        <tr><th>Stage</th><th>Age</th><th>Erogenous Zone</th><th>Key Conflict / Fixation Effect</th></tr>
+        <tr><td>Oral</td><td>0–18 mo</td><td>Mouth</td><td>Weaning → dependency, sarcasm, smoking</td></tr>
+        <tr><td>Anal</td><td>18 mo–3 yr</td><td>Bowels/bladder</td><td>Toilet training → orderliness or messiness</td></tr>
+        <tr><td>Phallic</td><td>3–6 yr</td><td>Genitals</td><td>Oedipus/Electra complex → authority issues</td></tr>
+        <tr><td>Latency</td><td>6–puberty</td><td>Dormant</td><td>Social/intellectual skill development</td></tr>
+        <tr><td>Genital</td><td>Puberty+</td><td>Genitals (mature)</td><td>Healthy adult sexual relationships</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.5-2</span><span class="accordion-title">Defense Against Anxiety</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>The ego uses <strong>defense mechanisms</strong> — unconscious strategies — to reduce anxiety arising from conflicts between the id, superego, and reality. See the <strong>Defense Mechanisms tab</strong> for all 12 with examples.</p>
+      <div class="box gold">
+        <div class="box-label">Most Tested Defense Mechanisms</div>
+        <strong>Repression</strong> (forgetting trauma) · <strong>Projection</strong> (attributing your feelings to others) · <strong>Rationalization</strong> (self-justifying excuses) · <strong>Reaction formation</strong> (acting opposite to true feelings) · <strong>Displacement</strong> (redirecting emotion to safer target) · <strong>Sublimation</strong> (channeling impulses productively)
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.5-3</span><span class="accordion-title">Neo-Freudians — What They Accepted & Rejected</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>Neo-Freudians <strong>accepted</strong>: the importance of the unconscious, the idea that childhood shapes personality, the use of talk therapy.</p>
+      <p style="margin-top:0.6rem;">Neo-Freudians <strong>rejected</strong>: sexuality as the primary driver of personality; the deterministic view of biological drives as fixed.</p>
+      <table class="t" style="margin-top:0.8rem;">
+        <tr><th>Theorist</th><th>Key Departure from Freud</th><th>Key Contribution</th></tr>
+        <tr><td><strong>Carl Jung</strong></td><td>Sex not primary; unconscious is positive, not just repressed</td><td>Collective unconscious, archetypes, introversion/extraversion</td></tr>
+        <tr><td><strong>Alfred Adler</strong></td><td>Social motives, not sex, drive personality</td><td>Inferiority complex, striving for superiority, birth order</td></tr>
+        <tr><td><strong>Karen Horney</strong></td><td>Rejected penis envy; cultural/social factors primary</td><td>Basic anxiety, criticized Freud's male bias, "womb envy"</td></tr>
+        <tr><td><strong>Erik Erikson</strong></td><td>Psychosocial stages, not psychosexual; development across lifespan</td><td>8 stages; identity crisis; trust vs. mistrust</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.5-4</span><span class="accordion-title">Contemporary Views of Freud & the Modern Unconscious</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Criticisms of Freud:</strong><br>
+      • Concepts (id, libido) are largely <em>untestable</em> — hard to falsify scientifically<br>
+      • Over-reliance on case studies of atypical patients<br>
+      • Male and Western cultural bias<br>
+      • Repression is not well-supported by memory research</p>
+      <p style="margin-top:0.7rem;"><strong>What modern research supports:</strong><br>
+      • The unconscious does exist — but it's more <em>automatic information processing</em> than a seething cauldron of repressed conflicts<br>
+      • <em>Implicit memory, priming, and subliminal processing</em> show unconscious influence on behavior<br>
+      • <em>Terror management theory</em>: Fear of death (a Freudian idea) does motivate much human behavior<br>
+      • Attachment research supports the importance of early relationships — but not specifically psychosexual stages</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.5-5</span><span class="accordion-title">Projective Tests</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Projective tests</strong>: Personality assessments using ambiguous stimuli to elicit unconscious thoughts, feelings, and motives. The idea is that people "project" their inner world onto ambiguous material.</p>
+      <p style="margin-top:0.6rem;"><strong>Rorschach Inkblot Test</strong>: 10 symmetrical inkblots; responses coded for content, form, movement. Widely used clinically.</p>
+      <p style="margin-top:0.5rem;"><strong>TAT (Thematic Apperception Test)</strong>: 20 ambiguous pictures; participants tell a story about each. Scored for themes of achievement, affiliation, power.</p>
+      <div class="box red" style="margin-top:0.8rem;">
+        <div class="box-label">Criticisms of Projective Tests</div>
+        • Low <strong>reliability</strong>: Different clinicians often score the same response differently<br>
+        • Low <strong>validity</strong>: Scores often don't predict behavior as well as simpler self-report measures<br>
+        • Cultural bias: Interpretations reflect the clinician's cultural framework<br>
+        • Despite criticisms, they remain widely used clinically — practitioners value qualitative insight even without strong psychometric support
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.5-6 · 4.5-7 · 4.5-8</span><span class="accordion-title">Humanistic Psychology — Rogers & Maslow</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Humanistic psychology's view (LT 4.5-6)</strong>: People are inherently good and motivated toward growth. Goal: understand the <em>whole person</em> from their subjective perspective. Emphasizes conscious experience, free will, and present/future — not just past trauma.</p>
+      <p style="margin-top:0.7rem;"><strong>How humanists assessed self (LT 4.5-7):</strong><br>
+      • <em>Rogers' Q-sort</em>: Participants sort cards describing traits into piles from "most like me" to "least like me" — repeated to compare real self vs. ideal self, and changes over therapy<br>
+      • <em>Self-concept questionnaires</em>: Direct measures of perceived self-worth and identity</p>
+      <p style="margin-top:0.7rem;"><strong>Maslow's Hierarchy:</strong></p>
+      <div class="maslow">
+        <div class="ml" style="width:28%;background:#8B0000;">Self-Actualization</div>
+        <div class="ml" style="width:42%;background:#b8440b;">Esteem Needs</div>
+        <div class="ml" style="width:58%;background:#b8860b;">Love & Belonging</div>
+        <div class="ml" style="width:74%;background:#3a6b35;">Safety Needs</div>
+        <div class="ml" style="width:90%;background:#1a4a6e;">Physiological Needs</div>
+      </div>
+      <p style="margin-top:0.7rem;"><strong>Rogers' key concepts:</strong> Unconditional positive regard, congruence (real vs. ideal self), actualizing tendency, conditions of worth.</p>
+      <div class="box red" style="margin-top:0.8rem;">
+        <div class="box-label">Criticisms of Humanistic Theory (LT 4.5-8)</div>
+        • Concepts like "self-actualization" are <strong>vague and difficult to test</strong><br>
+        • Too optimistic — ignores genuine evil and destructive impulses<br>
+        • Culturally biased toward Western individualism<br>
+        • <strong>Positive influence</strong>: Inspired client-centered therapy, positive psychology, and focus on human strengths
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== DEFENSE MECHANISMS ======== -->
+<section id="defense" class="section">
+  <h2 class="section-title">Defense Mechanisms</h2>
+  <p class="section-desc">LT 4.5-2 · Freud's ego strategies to manage anxiety — all heavily tested</p>
+  <div class="box gold">
+    <div class="box-label">Key Principle</div>
+    All defense mechanisms are <strong>unconscious</strong> — the person is unaware of using them. They are employed by the <strong>ego</strong> to protect against anxiety from id–superego–reality conflicts.
+  </div>
+  <div class="dm-grid" style="margin-top:1rem;">
+    <div class="dm"><div class="dm-name">Repression</div><div class="dm-def">Banishing anxiety-provoking thoughts from consciousness.</div><div class="dm-ex">Forgetting a traumatic event</div></div>
+    <div class="dm"><div class="dm-name">Regression</div><div class="dm-def">Retreating to an earlier, less mature stage of behavior under stress.</div><div class="dm-ex">An adult throwing a tantrum</div></div>
+    <div class="dm"><div class="dm-name">Rationalization</div><div class="dm-def">Generating self-justifying explanations for unacceptable behaviors.</div><div class="dm-ex">"I didn't really want that job anyway."</div></div>
+    <div class="dm"><div class="dm-name">Reaction Formation</div><div class="dm-def">Expressing the opposite of one's true anxiety-producing feelings.</div><div class="dm-ex">Being excessively sweet to someone you dislike</div></div>
+    <div class="dm"><div class="dm-name">Projection</div><div class="dm-def">Attributing your own unacceptable feelings to someone else.</div><div class="dm-ex">"I'm not jealous — YOU'RE the jealous one!"</div></div>
+    <div class="dm"><div class="dm-name">Displacement</div><div class="dm-def">Redirecting impulses from the real target to a safer substitute.</div><div class="dm-ex">Yelling at a sibling after a bad day at work</div></div>
+    <div class="dm"><div class="dm-name">Sublimation</div><div class="dm-def">Channeling unacceptable impulses into socially valued activities.</div><div class="dm-ex">Channeling aggression into competitive sport</div></div>
+    <div class="dm"><div class="dm-name">Denial</div><div class="dm-def">Refusing to acknowledge an anxiety-producing reality.</div><div class="dm-ex">"I don't have a problem with alcohol."</div></div>
+    <div class="dm"><div class="dm-name">Intellectualization</div><div class="dm-def">Detaching emotionally by focusing on abstract, analytical aspects.</div><div class="dm-ex">Researching cancer statistics instead of feeling fear after a diagnosis</div></div>
+    <div class="dm"><div class="dm-name">Identification</div><div class="dm-def">Reducing anxiety by modeling oneself after an admired or feared person.</div><div class="dm-ex">A child imitating a parent to resolve the Oedipus conflict</div></div>
+    <div class="dm"><div class="dm-name">Undoing</div><div class="dm-def">Attempting to cancel out an unacceptable act with a symbolic gesture.</div><div class="dm-ex">Excessive apologizing after an unkind thought</div></div>
+    <div class="dm"><div class="dm-name">Fixation</div><div class="dm-def">Remaining "stuck" at a psychosexual stage; unresolved conflict shapes adult personality.</div><div class="dm-ex">Oral fixation → smoking, overeating</div></div>
+  </div>
+  <div class="box red" style="margin-top:1.2rem;">
+    <div class="box-label">AP Exam Priority</div>
+    Most tested: <strong>repression, projection, rationalization, reaction formation, displacement, sublimation</strong>. For the FRQ, always give a specific behavioral example, not just a definition.
+  </div>
+</section>
+
+<!-- ======== 4.6 TRAITS ======== -->
+<section id="traits" class="section">
+  <h2 class="section-title">4.6 Social-Cognitive & Trait Theories</h2>
+  <p class="section-desc">LTs 4.6-1 through 4.6-6</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.6-1</span><span class="accordion-title">Describing Personality with Traits</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>Trait theorists describe personality using <strong>stable, consistent characteristics</strong> that predict behavior across situations.</p>
+      <p style="margin-top:0.6rem;"><strong>Allport</strong>: Identified ~18,000 trait words. Classified traits as <em>cardinal</em> (one defining trait), <em>central</em> (5–10 characteristic patterns), <em>secondary</em> (situational preferences).</p>
+      <p style="margin-top:0.6rem;"><strong>Eysenck</strong>: Reduced traits to two biological dimensions — <em>Introversion/Extraversion</em> and <em>Neuroticism/Stability</em>. Argued introverts have higher baseline arousal, which is why they avoid stimulation.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.6-2 · 4.6-3</span><span class="accordion-title">Personality Inventories & the Big Five</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Personality inventories</strong>: Long questionnaires with many items, empirically scored. Strengths: standardized, reliable, efficient. Weaknesses: social desirability bias, faking, limited self-insight.</p>
+      <p style="margin-top:0.5rem;"><strong>MMPI-2</strong>: 567 items; originally designed to diagnose disorders; includes validity scales to detect faking. <strong>NEO-PI-R</strong>: Measures Big Five. <strong>MBTI</strong>: Based on Jung; poor test-retest reliability.</p>
+      <table class="t" style="margin-top:0.8rem;">
+        <tr><th>Trait (OCEAN)</th><th>High Score</th><th>Low Score</th></tr>
+        <tr><td><span class="tname">Openness</span></td><td>Creative, curious, imaginative</td><td>Conventional, practical, routine-oriented</td></tr>
+        <tr><td><span class="tname">Conscientiousness</span></td><td>Organized, disciplined, dependable</td><td>Impulsive, disorganized, careless</td></tr>
+        <tr><td><span class="tname">Extraversion</span></td><td>Outgoing, sociable, positive affect</td><td>Reserved, introverted, quiet</td></tr>
+        <tr><td><span class="tname">Agreeableness</span></td><td>Compassionate, trusting, cooperative</td><td>Antagonistic, suspicious, uncooperative</td></tr>
+        <tr><td><span class="tname">Neuroticism</span></td><td>Anxious, moody, emotionally reactive</td><td>Calm, stable, resilient</td></tr>
+      </table>
+      <p style="margin-top:0.6rem;">Conscientiousness = strongest predictor of academic and job success. Neuroticism = strongest predictor of mental health difficulties.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.6-4</span><span class="accordion-title">Consistency of Personality Over Time</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>Research supports that personality traits are <strong>moderately to highly consistent</strong> over time and across situations — especially after age 30.</p>
+      <p style="margin-top:0.6rem;"><strong>Person-situation controversy</strong> (Mischel, 1968): Argued that behavior varies too much by situation to support strong trait claims. Modern resolution: <em>interactionist view</em> — behavior emerges from an interaction of traits and situations. Traits predict average behavior across many situations, not specific behavior in one situation.</p>
+      <p style="margin-top:0.6rem;">Longitudinal studies show Big Five traits are <strong>heritable (~50%)</strong> and remain stable from early adulthood through old age, with small increases in conscientiousness and agreeableness over the lifespan.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.6-5 · 4.6-6</span><span class="accordion-title">Social-Cognitive Theory — Bandura</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Reciprocal determinism</strong> (Bandura): Personality emerges from the ongoing interaction of <em>person (cognitions, beliefs)</em> ↔ <em>behavior</em> ↔ <em>environment</em>. Each factor influences the others.</p>
+      <p style="margin-top:0.6rem;"><strong>Self-efficacy</strong>: Belief in your ability to succeed on a specific task. Sources: past performance (strongest), vicarious experience (watching models), social persuasion, physiological states. High self-efficacy → greater effort, persistence, achievement.</p>
+      <p style="margin-top:0.6rem;"><strong>Locus of control</strong> (Rotter): Internal = "I control outcomes." External = "Luck/others control outcomes." Internal locus correlates with higher achievement and well-being.</p>
+      <p style="margin-top:0.6rem;"><strong>Learned helplessness</strong> (Seligman): After repeated uncontrollable negative events, organisms stop trying even when escape is possible. Linked to depression.</p>
+      <div class="box red">
+        <div class="box-label">Criticisms of Social-Cognitive Theory (LT 4.6-6)</div>
+        • Too focused on cognition; may underestimate the role of emotions and unconscious factors<br>
+        • Does not fully explain where personality consistency comes from<br>
+        • Some argue it is better at describing behavior in specific situations than explaining overall personality
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 4.7 MOTIVATION ======== -->
+<section id="motivation" class="section">
+  <h2 class="section-title">4.7 Motivation</h2>
+  <p class="section-desc">LTs 4.7-1 through 4.7-7 · Why we do what we do</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.7-1 · 4.7-2</span><span class="accordion-title">What Is Motivation? Four Key Theories</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Motivation</strong>: A need or desire that energizes and directs behavior toward a goal.</p>
+      <table class="t" style="margin-top:0.8rem;">
+        <tr><th>Theory</th><th>Core Idea</th><th>Limitation</th></tr>
+        <tr><td><strong>Instinct theory</strong></td><td>Behavior is genetically programmed — we are motivated by fixed action patterns (William James: 37 instincts)</td><td>Circular reasoning; doesn't explain variation within a species</td></tr>
+        <tr><td><strong>Drive-reduction theory</strong></td><td>Physiological needs create arousal (drives) that motivate behavior to reduce tension and restore homeostasis (Hull)</td><td>Doesn't explain curiosity or thrill-seeking; we sometimes increase arousal</td></tr>
+        <tr><td><strong>Arousal theory</strong></td><td>We seek an <em>optimal level</em> of arousal — not too high, not too low (Yerkes-Dodson law)</td><td>Optimal level varies by task and individual</td></tr>
+        <tr><td><strong>Hierarchy of needs</strong></td><td>Lower needs must be met before higher needs become motivating (Maslow)</td><td>Order is not rigid; people pursue higher needs even when lower ones aren't fully met</td></tr>
+      </table>
+      <div class="box gold" style="margin-top:0.8rem;">
+        <div class="box-label">Yerkes-Dodson Law</div>
+        Performance is best at a <strong>moderate level of arousal</strong>. For <em>simple tasks</em>, higher arousal helps; for <em>complex tasks</em>, lower arousal is better. Explains why nervousness hurts difficult tasks but helps simple ones.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.7-3 · 4.7-4</span><span class="accordion-title">The Need to Belong & Social Networking</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Need to belong</strong> (Baumeister & Leary): A fundamental human motivation — we need frequent, positive interactions with stable, caring relationships. This need is as basic as hunger.</p>
+      <p style="margin-top:0.6rem;"><strong>Evidence for the need to belong:</strong><br>
+      • Social exclusion activates the same brain regions as physical pain (fMRI studies)<br>
+      • Ostracism (Cyberball experiments) reduces feelings of belonging, control, and self-esteem immediately<br>
+      • Loneliness is linked to higher mortality rates, weakened immune function, and depression<br>
+      • People form bonds quickly and resist their dissolution</p>
+      <p style="margin-top:0.7rem;"><strong>Social networking (LT 4.7-4):</strong><br>
+      • Online social networks fulfill the need to belong for many — especially introverts<br>
+      • However, passive social media use (scrolling without interacting) is linked to reduced well-being and increased social comparison<br>
+      • Active engagement (posting, messaging) shows fewer negative effects<br>
+      • <em>Fear of Missing Out (FOMO)</em>: Social media heightens awareness of others' social lives, increasing feelings of exclusion</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.7-5</span><span class="accordion-title">Achievement Motivation</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Achievement motivation</strong> (McClelland): A desire to excel, accomplish goals, and succeed. People high in achievement motivation choose moderately challenging tasks — easy enough to succeed, hard enough to feel meaningful.</p>
+      <p style="margin-top:0.6rem;"><strong>Intrinsic vs. extrinsic motivation:</strong><br>
+      • <em>Intrinsic</em>: Motivated by inherent interest, enjoyment, or challenge<br>
+      • <em>Extrinsic</em>: Motivated by external rewards (grades, money, praise)<br>
+      • <strong>Overjustification effect</strong>: Adding external rewards to an intrinsically motivating activity <em>reduces</em> intrinsic motivation ("I used to love reading — now I do it for points")</p>
+      <p style="margin-top:0.6rem;"><strong>Encouraging achievement:</strong><br>
+      • Focus on <em>mastery goals</em> (improving skill) vs. <em>performance goals</em> (outperforming others)<br>
+      • Attribute success to <em>effort</em>, not fixed ability (growth mindset, Dweck)<br>
+      • Provide immediate, specific feedback<br>
+      • Encourage autonomy and competence (Self-Determination Theory, Deci & Ryan)</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.7-6 · 4.7-7</span><span class="accordion-title">Hunger — Physiological & Cultural Factors</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Physiological factors (LT 4.7-6):</strong><br>
+      • <em>Blood glucose</em>: Low blood sugar signals hunger to the hypothalamus<br>
+      • <em>Hypothalamus</em>: The lateral hypothalamus triggers eating; the ventromedial hypothalamus signals fullness/satiety<br>
+      • <em>Hormones</em>: <strong>Ghrelin</strong> (stomach) rises before meals, stimulating appetite; <strong>Leptin</strong> (fat cells) signals fullness; <strong>Insulin</strong> regulates blood glucose<br>
+      • <em>Set point / settling point</em>: The body defends a particular weight range; reducing caloric intake lowers metabolism</p>
+      <p style="margin-top:0.7rem;"><strong>Cultural and situational factors (LT 4.7-7):</strong><br>
+      • <em>Taste preferences</em>: Shaped by culture — what is a delicacy in one culture is inedible in another<br>
+      • <em>Unit bias</em>: We tend to eat one unit of whatever is served — larger portions = more eating<br>
+      • <em>Social facilitation of eating</em>: We eat more in groups<br>
+      • <em>Variety effect</em>: More food variety = more eating<br>
+      • <em>Situational cues</em>: Bowl size, plate color, distraction (TV), time of day all affect intake</p>
+      <div class="box gold">
+        <div class="box-label">Obesity — A Biopsychosocial Issue</div>
+        Genetic factors (~70% heritability of BMI), metabolic rate, food environment, activity level, psychological factors (stress, emotional eating) all contribute. No single cause; requires multifaceted interventions.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 4.8 EMOTION ======== -->
+<section id="emotion" class="section">
+  <h2 class="section-title">4.8 Emotions</h2>
+  <p class="section-desc">LTs 4.8-1 through 4.8-9 · How we feel and express emotion</p>
+
+  <div class="accordion-item open">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.8-1 · 4.8-2</span><span class="accordion-title">Three Theories of Emotion</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p>The core question: Do emotions arise from our physiology, our cognitions, or both — and in what order?</p>
+      <div class="emo-grid" style="margin-top:0.8rem;">
+        <div class="emo-card">
+          <div class="emo-name">James-Lange Theory</div>
+          <div class="emo-def"><strong>Stimulus → Physiological Response → Emotion</strong><br><br>We feel emotions because we notice our own physiological reactions. "We do not tremble because we are afraid; we are afraid because we tremble."</div>
+        </div>
+        <div class="emo-card">
+          <div class="emo-name">Cannon-Bard Theory</div>
+          <div class="emo-def"><strong>Stimulus → Emotion AND Physiological Response simultaneously</strong><br><br>The thalamus simultaneously sends signals to the cortex (emotion) and body (arousal). Physiological responses and feelings occur at the same time, independently.</div>
+        </div>
+        <div class="emo-card">
+          <div class="emo-name">Schachter-Singer Two-Factor Theory</div>
+          <div class="emo-def"><strong>Stimulus → Physiological Arousal + Cognitive Label → Emotion</strong><br><br>Emotion = arousal + a label we apply to explain it. The "bridge study": Aroused men on a scary bridge attributed arousal to attraction; on a safe bridge, they did not.</div>
+        </div>
+        <div class="emo-card">
+          <div class="emo-name">Lazarus Cognitive Appraisal</div>
+          <div class="emo-def"><strong>Stimulus → Cognitive Appraisal → Emotion</strong><br><br>Thought must precede emotion. How we <em>interpret</em> an event (primary appraisal: threat or opportunity?) determines which emotion we feel.</div>
+        </div>
+        <div class="emo-card">
+          <div class="emo-name">Zajonc / LeDoux — Emotion Without Cognition</div>
+          <div class="emo-def"><strong>Some emotional responses occur without conscious thought</strong><br><br>The amygdala can trigger fear responses before the cortex consciously processes the stimulus. Emotional reactions can precede and bypass deliberate cognitive appraisal.</div>
+        </div>
+      </div>
+      <div class="box gold" style="margin-top:0.8rem;">
+        <div class="box-label">AP Key Point (LT 4.8-2)</div>
+        Both positions are partly correct. <strong>Some emotions</strong> (fear, disgust) can occur without conscious labeling (Zajonc, LeDoux). <strong>Other emotions</strong> require cognitive appraisal (Lazarus). The debate is about which pathway is primary, not which is the only one.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.8-3</span><span class="accordion-title">Basic Emotions</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Paul Ekman</strong> identified <strong>6 basic emotions</strong> recognized across cultures (evidence from isolated tribes): <em>happiness, sadness, fear, anger, disgust, surprise.</em> Some researchers add contempt as a seventh.</p>
+      <p style="margin-top:0.6rem;">These emotions are considered <em>universal</em> because they appear cross-culturally, emerge early in development, and have recognizable facial expressions.</p>
+      <p style="margin-top:0.6rem;"><strong>Plutchik's Wheel of Emotions</strong>: 8 primary emotions arranged in opposing pairs (joy/sadness, anger/fear, trust/disgust, anticipation/surprise); combined to create complex emotions (love = joy + trust; contempt = anger + disgust).</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.8-4 · 4.8-5</span><span class="accordion-title">Physiological & Neural Bases of Emotion</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Autonomic nervous system (LT 4.8-4):</strong><br>
+      • <em>Sympathetic NS</em>: Activates during emotional arousal — accelerates heart rate, dilates pupils, inhibits digestion, increases respiration ("fight-or-flight")<br>
+      • <em>Parasympathetic NS</em>: Restores calm after the arousal passes — decreases heart rate, constricts pupils ("rest-and-digest")</p>
+      <p style="margin-top:0.7rem;"><strong>Brain structures (LT 4.8-5):</strong><br>
+      • <em>Amygdala</em>: Fear center; processes threatening stimuli; responds faster than conscious thought (LeDoux's "low road" — subcortical pathway for immediate fear)<br>
+      • <em>Prefrontal cortex</em>: Regulates emotion; damage causes inappropriate emotional responses<br>
+      • <em>Left frontal lobe</em>: Associated with positive emotions<br>
+      • <em>Right frontal lobe</em>: Associated with negative emotions and withdrawal</p>
+      <p style="margin-top:0.6rem;"><strong>Polygraph (lie detector)</strong>: Measures physiological arousal (breathing, GSR, heart rate). Unreliable for detecting lies because arousal reflects many emotions — not guilt specifically. Not admissible in most courts.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.8-6 · 4.8-7 · 4.8-8</span><span class="accordion-title">Nonverbal Communication — Gender & Culture</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Nonverbal communication (LT 4.8-6)</strong>: We communicate emotions through facial expressions, gestures, posture, eye contact, touch, and tone of voice. Nonverbal cues are often more accurate indicators of true feeling than words.</p>
+      <p style="margin-top:0.6rem;"><strong>Gender differences (LT 4.8-7):</strong><br>
+      • Women are generally better at both <em>reading</em> and <em>expressing</em> emotions nonverbally<br>
+      • Women make more eye contact; men use more personal space<br>
+      • Possible explanations: socialization (girls encouraged to be emotionally expressive), evolved caregiving roles, status differences (lower-status people read others more carefully)</p>
+      <p style="margin-top:0.6rem;"><strong>Culture and gestures (LT 4.8-8):</strong><br>
+      • Gestures vary greatly across cultures — a "thumbs up" is obscene in some regions<br>
+      • Personal space norms vary: Northern Europeans prefer more distance; Middle Eastern and Latin cultures less<br>
+      • <strong>BUT: Facial expressions for basic emotions are culturally universal</strong> (Ekman's cross-cultural research) — people in isolated cultures recognized the same 6 facial expressions</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header" onclick="tog(this)">
+      <div class="accordion-header-left"><span class="lt">LT 4.8-9</span><span class="accordion-title">Facial Feedback — How Expressions Influence Feelings</span></div><span class="accordion-icon">+</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong>Facial feedback hypothesis</strong>: Facial expressions do not just reflect emotions — they also influence them. Feedback from facial muscles to the brain alters the emotional experience.</p>
+      <p style="margin-top:0.6rem;"><strong>Classic study (Strack et al., 1988)</strong>: Participants held a pen in their mouth either with their teeth (forced smile) or with their lips (forced frown). The "smiling" group rated cartoons as funnier.</p>
+      <p style="margin-top:0.6rem;"><strong>Behavioral confirmation</strong>: Acting happy (smiling, upright posture) can generate positive affect — not just reflect it. This supports use of behavioral activation in treating depression.</p>
+      <p style="margin-top:0.6rem;"><strong>Botox studies</strong>: People who cannot move certain facial muscles after Botox injections show slower emotional recognition in others — suggesting expression helps us simulate others' emotions (embodied simulation).</p>
+      <div class="box gold">
+        <div class="box-label">James-Lange Connection</div>
+        Facial feedback is consistent with the James-Lange theory — our bodily responses (including facial muscle movements) contribute to our subjective emotional experience, not just the reverse.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== THEORISTS ======== -->
+<section id="theorists" class="section">
+  <h2 class="section-title">Key Theorists</h2>
+  <p class="section-desc">All major theorists across Unit 4</p>
+
+  <div class="theorist"><div class="th-name">Sigmund Freud</div><div class="th-era">1856–1939 · Psychoanalytic</div><div class="th-body">Founder of psychoanalysis. Proposed the unconscious as primary driver of personality. Structural model (id/ego/superego), five psychosexual stages, defense mechanisms, free association, dream analysis. Critiqued for being unscientific and male-biased.</div><div class="chips"><span class="chip">Unconscious</span><span class="chip">Id/Ego/Superego</span><span class="chip">Psychosexual Stages</span><span class="chip">Defense Mechanisms</span></div></div>
+  <div class="theorist"><div class="th-name">Carl Jung</div><div class="th-era">1875–1961 · Analytical Psychology</div><div class="th-body">Neo-Freudian. Proposed the <strong>collective unconscious</strong> — shared inherited archetypes (shadow, anima, persona, self). Introduced introversion/extraversion as a dimension. Disagreed that libido was primarily sexual.</div><div class="chips"><span class="chip">Collective Unconscious</span><span class="chip">Archetypes</span><span class="chip">Introvert/Extravert</span></div></div>
+  <div class="theorist"><div class="th-name">Alfred Adler</div><div class="th-era">1870–1937 · Individual Psychology</div><div class="th-body">Neo-Freudian. Personality driven by overcoming <strong>inferiority feelings</strong> and striving for superiority. Emphasized social interest and birth order. Departure: social motives, not sex, are primary.</div><div class="chips"><span class="chip">Inferiority Complex</span><span class="chip">Striving for Superiority</span><span class="chip">Birth Order</span></div></div>
+  <div class="theorist"><div class="th-name">Karen Horney</div><div class="th-era">1885–1952 · Neo-Freudian</div><div class="th-body">Challenged Freud's sexism. Proposed <strong>basic anxiety</strong> (helplessness/isolation in childhood) as the root of neurosis. Introduced the concept of "womb envy" as a counter to "penis envy."</div><div class="chips"><span class="chip">Basic Anxiety</span><span class="chip">Cultural/Social Factors</span><span class="chip">Feminist Critique</span></div></div>
+  <div class="theorist"><div class="th-name">Abraham Maslow</div><div class="th-era">1908–1970 · Humanistic</div><div class="th-body">Proposed the <strong>Hierarchy of Needs</strong> and studied self-actualized individuals and peak experiences. Co-founder of humanistic psychology. Criticized for being vague and culturally biased.</div><div class="chips"><span class="chip">Hierarchy of Needs</span><span class="chip">Self-Actualization</span><span class="chip">Peak Experiences</span></div></div>
+  <div class="theorist"><div class="th-name">Carl Rogers</div><div class="th-era">1902–1987 · Person-Centered</div><div class="th-body">Developed client-centered therapy. Core concepts: <strong>unconditional positive regard</strong>, congruence, actualizing tendency, conditions of worth. Used Q-sort methodology to study self-concept scientifically.</div><div class="chips"><span class="chip">Unconditional Positive Regard</span><span class="chip">Congruence</span><span class="chip">Self-Concept</span><span class="chip">Q-Sort</span></div></div>
+  <div class="theorist"><div class="th-name">Albert Bandura</div><div class="th-era">1925–2021 · Social-Cognitive</div><div class="th-body">Demonstrated observational learning (Bobo doll). Introduced <strong>reciprocal determinism</strong> and <strong>self-efficacy</strong>. Bridged behaviorism and cognitive psychology.</div><div class="chips"><span class="chip">Observational Learning</span><span class="chip">Self-Efficacy</span><span class="chip">Reciprocal Determinism</span></div></div>
+  <div class="theorist"><div class="th-name">Stanley Milgram</div><div class="th-era">1933–1984 · Social Psychology</div><div class="th-body">Obedience experiments (1963): 65% administered maximum shocks. Proposed agentic state theory. Results generalized across cultures, raising ethical debates about research methods.</div><div class="chips"><span class="chip">Obedience</span><span class="chip">Agentic State Theory</span><span class="chip">Authority</span></div></div>
+  <div class="theorist"><div class="th-name">Solomon Asch</div><div class="th-era">1907–1996 · Social Psychology</div><div class="th-body">Line conformity experiments: ~37% conformity despite obvious answers. One ally broke conformity. Distinguished normative from informational influence.</div><div class="chips"><span class="chip">Conformity</span><span class="chip">Line Experiments</span><span class="chip">Social Norms</span></div></div>
+  <div class="theorist"><div class="th-name">William James / Carl Lange</div><div class="th-era">1840s–1900s · Emotion</div><div class="th-body">James-Lange theory: physiological responses precede and cause emotional experience. "We are afraid because we tremble" — not the reverse.</div><div class="chips"><span class="chip">James-Lange Theory</span><span class="chip">Physiological Basis of Emotion</span></div></div>
+  <div class="theorist"><div class="th-name">Stanley Schachter & Jerome Singer</div><div class="th-era">1960s · Emotion</div><div class="th-body">Two-factor theory: emotion = physiological arousal + cognitive label. "Bridge study" showed that arousal can be mis-attributed to emotional sources depending on context.</div><div class="chips"><span class="chip">Two-Factor Theory</span><span class="chip">Arousal + Label</span><span class="chip">Misattribution</span></div></div>
+  <div class="theorist"><div class="th-name">Paul Ekman</div><div class="th-era">b. 1934 · Emotion</div><div class="th-body">Identified 6 universal basic emotions with cross-culturally recognized facial expressions: happiness, sadness, fear, anger, disgust, surprise. Research in isolated tribal cultures confirmed universality.</div><div class="chips"><span class="chip">Basic Emotions</span><span class="chip">Universal Expressions</span><span class="chip">Cross-Cultural</span></div></div>
+</section>
+
+<!-- ======== STUDIES ======== -->
+<section id="studies" class="section">
+  <h2 class="section-title">Landmark Studies</h2>
+  <p class="section-desc">Procedure · Findings · AP implications</p>
+
+  <div class="exp"><div class="exp-name">Milgram Obedience Study (1963)</div><div class="exp-meta">Stanley Milgram · Yale University</div><div class="exp-body">Participants ordered to administer increasing shocks (15–450V) to a "learner" (confederate) by an authority figure in a lab coat.</div><div class="exp-find">65% went to maximum 450V. Obedience decreased with victim proximity, peer defiance, and absent authority.</div><div class="exp-ap">AP: Demonstrates situational power over behavior; raises FAE issue; ethical landmark in research ethics.</div></div>
+
+  <div class="exp"><div class="exp-name">Asch Conformity Experiments (1951)</div><div class="exp-meta">Solomon Asch · Swarthmore College</div><div class="exp-body">Participants judged line lengths alongside confederates who unanimously gave wrong answers.</div><div class="exp-find">~37% conformity; 75% conformed at least once. One ally reduced conformity to ~5%.</div><div class="exp-ap">AP: Normative social influence ≠ obedience. No authority figure — just peer pressure.</div></div>
+
+  <div class="exp"><div class="exp-name">Stanford Prison Experiment (1971)</div><div class="exp-meta">Philip Zimbardo · Stanford University</div><div class="exp-body">Students randomly assigned as "guards" or "prisoners" in a simulated prison environment.</div><div class="exp-find">Guards became abusive; prisoners became passive and distressed. Ended after 6 days.</div><div class="exp-ap">AP: Situational roles shape behavior; criticized for ethical violations, coaching, and lack of scientific controls.</div></div>
+
+  <div class="exp"><div class="exp-name">Bobo Doll Study (1961)</div><div class="exp-meta">Albert Bandura · Stanford University</div><div class="exp-body">Children watched adults aggress against a Bobo doll — live, filmed, and cartoon versions. Then given mild frustration and play time.</div><div class="exp-find">Children imitated aggressive behaviors, including novel acts. Effect held for filmed models. Boys imitated more; same-sex models had stronger effect.</div><div class="exp-ap">AP: Foundational for observational/social learning theory. Vicarious reinforcement increases imitation.</div></div>
+
+  <div class="exp"><div class="exp-name">Darley & Latané Bystander Studies (1968)</div><div class="exp-meta">Columbia University</div><div class="exp-body">Participants heard a seizure, saw smoke, or witnessed an emergency — alone or in groups.</div><div class="exp-find">85% helped when alone vs. 31% in groups. Diffusion of responsibility + pluralistic ignorance explain the effect.</div><div class="exp-ap">AP: To increase helping — reduce group size, assign specific responsibility, eliminate ambiguity.</div></div>
+
+  <div class="exp"><div class="exp-name">Festinger & Carlsmith — Cognitive Dissonance (1959)</div><div class="exp-meta">Stanford University</div><div class="exp-body">Participants paid $1 or $20 to lie about a boring task; later rated their true enjoyment.</div><div class="exp-find">$1 group rated the task more positively. Insufficient external justification forced internal attitude change.</div><div class="exp-ap">AP: Insufficient justification = more dissonance = more attitude change. Counter-intuitive: less reward → more persuasion of oneself.</div></div>
+
+  <div class="exp"><div class="exp-name">Robbers Cave Experiment (1954)</div><div class="exp-meta">Muzafer Sherif · Oklahoma</div><div class="exp-body">Boys at summer camp divided into competing groups, then given superordinate goals.</div><div class="exp-find">Competition created strong in-group bias. Superordinate goals (shared challenges) successfully reduced hostility.</div><div class="exp-ap">AP: Supports contact hypothesis — cooperative, equal-status contact with shared goals reduces prejudice.</div></div>
+
+  <div class="exp"><div class="exp-name">Schachter-Singer "Bridge Study" (1962)</div><div class="exp-meta">Two-Factor Theory of Emotion</div><div class="exp-body">Men crossed either a scary suspension bridge or a stable bridge, then were approached by an attractive interviewer.</div><div class="exp-find">Men on the scary bridge were more likely to attribute their arousal to attraction (misattribution of arousal) and call the interviewer.</div><div class="exp-ap">AP: Classic demonstration of two-factor theory — same arousal, different label = different emotion.</div></div>
+
+  <div class="exp"><div class="exp-name">Strack Pen-in-Mouth Study (1988)</div><div class="exp-meta">Fritz Strack — Facial Feedback</div><div class="exp-body">Participants held a pen with their teeth (inducing a smile) or lips (inducing a pout) while rating cartoons.</div><div class="exp-find">"Smiling" group rated cartoons as funnier, supporting the facial feedback hypothesis.</div><div class="exp-ap">AP: LT 4.8-9 — facial expressions don't just reflect emotions; they also generate them. Consistent with James-Lange theory.</div></div>
+</section>
+
+<!-- ======== KEY TERMS ======== -->
+<section id="terms" class="section">
+  <h2 class="section-title">Key Terms</h2>
+  <p class="section-desc">All major vocabulary aligned to learning targets</p>
+
+  <div class="sub-head">4.1 Attribution & Person Perception</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">Attribution Theory</div><div class="tdef">Framework explaining how we infer the causes of behavior as internal (dispositional) or external (situational).</div></div>
+    <div class="term"><div class="tname2">Fundamental Attribution Error</div><div class="tdef">When judging others, overestimating dispositional causes and underestimating situational ones.</div></div>
+    <div class="term"><div class="tname2">Self-Serving Bias</div><div class="tdef">Attributing personal successes to internal factors and failures to external factors.</div></div>
+    <div class="term"><div class="tname2">Actor-Observer Bias</div><div class="tdef">We explain our behavior situationally, but others' behavior dispositionally.</div></div>
+    <div class="term"><div class="tname2">Social Comparison</div><div class="tdef">Evaluating our opinions and abilities by comparing ourselves to others; shapes self-perception.</div></div>
+    <div class="term"><div class="tname2">Explicit Prejudice</div><div class="tdef">Conscious, deliberate negative attitudes toward a group that the person is aware of and endorses.</div></div>
+    <div class="term"><div class="tname2">Implicit Prejudice</div><div class="tdef">Unconscious, automatic bias measured by the Implicit Association Test (IAT).</div></div>
+    <div class="term"><div class="tname2">Stereotype Threat</div><div class="tdef">Awareness of a negative stereotype about one's group disrupts performance on related tasks (Steele).</div></div>
+    <div class="term"><div class="tname2">Just-World Phenomenon</div><div class="tdef">Belief that the world is fair and people get what they deserve; leads to victim-blaming.</div></div>
+  </div>
+
+  <div class="sub-head">4.2 Attitudes</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">Cognitive Dissonance</div><div class="tdef">Discomfort from conflicting cognitions; motivates attitude or behavior change (Festinger).</div></div>
+    <div class="term"><div class="tname2">Central Route Persuasion</div><div class="tdef">Attitude change through careful analysis of logical arguments; produces durable change.</div></div>
+    <div class="term"><div class="tname2">Peripheral Route Persuasion</div><div class="tdef">Attitude change via superficial cues (attractiveness, authority); produces temporary change.</div></div>
+    <div class="term"><div class="tname2">Mere Exposure Effect</div><div class="tdef">Repeated exposure to a stimulus increases liking, even without awareness.</div></div>
+    <div class="term"><div class="tname2">Foot-in-the-Door</div><div class="tdef">Small initial request increases likelihood of complying with a larger request later.</div></div>
+  </div>
+
+  <div class="sub-head">4.3 Social Situations</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">Social Contagion</div><div class="tdef">Automatic spread of behaviors, emotions, or ideas through a group — a form of unconscious conformity.</div></div>
+    <div class="term"><div class="tname2">Normative Social Influence</div><div class="tdef">Conforming to be liked/accepted; public compliance without private acceptance.</div></div>
+    <div class="term"><div class="tname2">Informational Social Influence</div><div class="tdef">Conforming because we genuinely believe others have more accurate information.</div></div>
+    <div class="term"><div class="tname2">Obedience</div><div class="tdef">Changing behavior in direct response to a command from a perceived authority figure.</div></div>
+    <div class="term"><div class="tname2">Social Facilitation</div><div class="tdef">Others' presence enhances easy/practiced tasks and impairs difficult/novel tasks (Zajonc).</div></div>
+    <div class="term"><div class="tname2">Social Loafing</div><div class="tdef">Reduced individual effort in a group due to diffused accountability.</div></div>
+    <div class="term"><div class="tname2">Deindividuation</div><div class="tdef">Loss of self-awareness and restraint in group situations; leads to impulsive behavior.</div></div>
+    <div class="term"><div class="tname2">Group Polarization</div><div class="tdef">Group discussion amplifies the average pre-existing attitude of group members.</div></div>
+    <div class="term"><div class="tname2">Groupthink</div><div class="tdef">Desire for group harmony overrides critical thinking; suppresses dissent (Janis).</div></div>
+    <div class="term"><div class="tname2">Frustration-Aggression Principle</div><div class="tdef">Frustration (blocked goals) increases the likelihood of aggressive behavior (Dollard).</div></div>
+    <div class="term"><div class="tname2">Bystander Effect</div><div class="tdef">Larger number of bystanders reduces individual likelihood of helping (Darley & Latané).</div></div>
+    <div class="term"><div class="tname2">Diffusion of Responsibility</div><div class="tdef">Each person feels less personally accountable when others are present who could also act.</div></div>
+    <div class="term"><div class="tname2">Altruism</div><div class="tdef">Unselfish concern for the welfare of others; helping without expectation of personal reward.</div></div>
+    <div class="term"><div class="tname2">Social Exchange Theory</div><div class="tdef">We help when perceived benefits outweigh costs; helping is rational self-interest.</div></div>
+    <div class="term"><div class="tname2">Superordinate Goals</div><div class="tdef">Shared goals requiring cooperation between competing groups; reduces intergroup conflict.</div></div>
+    <div class="term"><div class="tname2">Mirror-Image Perceptions</div><div class="tdef">Conflicting parties each view themselves as righteous and the other as evil; fuels conflict.</div></div>
+    <div class="term"><div class="tname2">Passionate Love</div><div class="tdef">Intense, aroused longing for union; associated with novelty and idealization; peaks early.</div></div>
+    <div class="term"><div class="tname2">Companionate Love</div><div class="tdef">Deep, affectionate attachment based on trust and shared history; grows over time.</div></div>
+  </div>
+
+  <div class="sub-head">4.4–4.5 Personality — Psychodynamic & Humanistic</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">Id / Ego / Superego</div><div class="tdef">Freud's three structures: unconscious drives (id), rational mediator (ego), internalized morality (superego).</div></div>
+    <div class="term"><div class="tname2">Defense Mechanisms</div><div class="tdef">Unconscious ego strategies to reduce anxiety (repression, projection, rationalization, etc.).</div></div>
+    <div class="term"><div class="tname2">Collective Unconscious</div><div class="tdef">Jung's shared, inherited reservoir of archetypes across all of humanity.</div></div>
+    <div class="term"><div class="tname2">Inferiority Complex</div><div class="tdef">Adler's term for deep feelings of inadequacy that motivate striving for superiority.</div></div>
+    <div class="term"><div class="tname2">Unconditional Positive Regard</div><div class="tdef">Rogers: full, non-judgmental acceptance of a person; promotes psychological growth and congruence.</div></div>
+    <div class="term"><div class="tname2">Congruence</div><div class="tdef">Rogers: match between real self and ideal self; incongruence produces anxiety and maladjustment.</div></div>
+    <div class="term"><div class="tname2">Self-Actualization</div><div class="tdef">Maslow's highest need — fulfilling one's greatest potential; the peak of the hierarchy.</div></div>
+    <div class="term"><div class="tname2">Projective Test</div><div class="tdef">Personality assessment using ambiguous stimuli (Rorschach, TAT) to reveal unconscious processes.</div></div>
+  </div>
+
+  <div class="sub-head">4.6 Traits & Social-Cognitive</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">Big Five (OCEAN)</div><div class="tdef">Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism — the five broad personality dimensions.</div></div>
+    <div class="term"><div class="tname2">Self-Efficacy</div><div class="tdef">Bandura: belief in one's ability to perform specific behaviors needed to achieve goals.</div></div>
+    <div class="term"><div class="tname2">Reciprocal Determinism</div><div class="tdef">Bandura: personality emerges from mutual interaction of person (cognitions), behavior, and environment.</div></div>
+    <div class="term"><div class="tname2">Locus of Control</div><div class="tdef">Rotter: Internal = you control outcomes; External = luck/others control outcomes.</div></div>
+    <div class="term"><div class="tname2">Learned Helplessness</div><div class="tdef">Seligman: passive resignation after repeated uncontrollable negative events; linked to depression.</div></div>
+    <div class="term"><div class="tname2">Overjustification Effect</div><div class="tdef">Adding external rewards to an intrinsically motivating activity reduces intrinsic motivation.</div></div>
+  </div>
+
+  <div class="sub-head">4.7 Motivation</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">Drive-Reduction Theory</div><div class="tdef">Physiological needs create arousal (drives) that motivate behavior to restore homeostasis (Hull).</div></div>
+    <div class="term"><div class="tname2">Yerkes-Dodson Law</div><div class="tdef">Performance peaks at moderate arousal; for complex tasks, lower arousal is optimal; for simple tasks, higher arousal helps.</div></div>
+    <div class="term"><div class="tname2">Need to Belong</div><div class="tdef">Fundamental human motivation for frequent, positive interactions with stable, caring relationships (Baumeister).</div></div>
+    <div class="term"><div class="tname2">Ghrelin / Leptin</div><div class="tdef">Ghrelin (stomach) stimulates appetite; Leptin (fat cells) signals fullness/satiety to the hypothalamus.</div></div>
+    <div class="term"><div class="tname2">Intrinsic Motivation</div><div class="tdef">Motivation driven by internal interest, enjoyment, or personal challenge — not external reward.</div></div>
+  </div>
+
+  <div class="sub-head">4.8 Emotion</div>
+  <div class="terms">
+    <div class="term"><div class="tname2">James-Lange Theory</div><div class="tdef">Stimulus → physiological response → emotion. We feel emotions because we notice our bodily arousal.</div></div>
+    <div class="term"><div class="tname2">Cannon-Bard Theory</div><div class="tdef">Stimulus → simultaneous emotion AND physiological response. Body arousal and feelings are independent, parallel processes.</div></div>
+    <div class="term"><div class="tname2">Two-Factor Theory</div><div class="tdef">Schachter-Singer: emotion = physiological arousal + cognitive label. Arousal can be misattributed to different emotions based on context.</div></div>
+    <div class="term"><div class="tname2">Facial Feedback Hypothesis</div><div class="tdef">Facial expressions not only reflect emotions — they also influence them. Smiling can make you feel happier.</div></div>
+    <div class="term"><div class="tname2">Basic Emotions</div><div class="tdef">Ekman's 6 universally recognized emotions: happiness, sadness, fear, anger, disgust, surprise.</div></div>
+    <div class="term"><div class="tname2">Polygraph</div><div class="tdef">Measures physiological arousal to detect lies; unreliable because arousal reflects many emotions, not just guilt.</div></div>
+  </div>
+</section>
+
+<!-- ======== FLASHCARDS ======== -->
+<section id="flashcards" class="section">
+  <h2 class="section-title">Flashcards</h2>
+  <p class="section-desc">Click card to flip · Navigate with arrows · Shuffle anytime</p>
+  <div class="fc-wrap">
+    <div class="fc" id="fc" onclick="flipFC()">
+      <div class="fc-front"><div class="fc-lbl">Term</div><div class="fc-term" id="fc-t">Loading…</div></div>
+      <div class="fc-back"><div class="fc-lbl">Definition</div><div class="fc-def" id="fc-d"></div></div>
+    </div>
+  </div>
+  <div class="fc-count" id="fc-c"></div>
+  <div class="fc-ctrls">
+    <button class="fc-btn" onclick="prevFC()">← Prev</button>
+    <button class="fc-btn" onclick="flipFC()">Flip</button>
+    <button class="fc-btn" onclick="nextFC()">Next →</button>
+    <button class="fc-btn" onclick="shuffleFC()">Shuffle</button>
+  </div>
+</section>
+
+<!-- ======== QUIZ ======== -->
+<section id="quiz" class="section">
+  <h2 class="section-title">Practice Quiz</h2>
+  <p class="section-desc">18 AP-style questions covering all learning targets 4.1–4.8</p>
+  <div class="q-wrap" id="qwrap">
+
+    <div class="q-card" data-q="0"><div class="q-num">Q 01 · LT 4.1-1</div><div class="q-text">A manager assumes an employee missed a deadline because she is lazy, ignoring that the employee's computer broke. This illustrates:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,0,false)">A. Self-serving bias</button><button class="q-opt" onclick="ans(this,0,true)">B. Fundamental attribution error</button><button class="q-opt" onclick="ans(this,0,false)">C. Actor-observer bias</button><button class="q-opt" onclick="ans(this,0,false)">D. Social comparison</button></div><div class="q-exp">FAE: judging others by their character (lazy) while ignoring situation (broken computer).</div></div>
+
+    <div class="q-card" data-q="1"><div class="q-num">Q 02 · LT 4.1-3</div><div class="q-text">Which best distinguishes explicit prejudice from implicit prejudice?</div><div class="q-opts"><button class="q-opt" onclick="ans(this,1,false)">A. Explicit is based on race; implicit is based on gender</button><button class="q-opt" onclick="ans(this,1,true)">B. Explicit is conscious and deliberate; implicit is unconscious and automatic</button><button class="q-opt" onclick="ans(this,1,false)">C. Explicit involves behavior; implicit involves only attitudes</button><button class="q-opt" onclick="ans(this,1,false)">D. Explicit is measured by the IAT; implicit is measured by surveys</button></div><div class="q-exp">Explicit = aware, deliberate bias. Implicit = unconscious, automatic bias (measured by IAT — the reverse of the wrong answer D).</div></div>
+
+    <div class="q-card" data-q="2"><div class="q-num">Q 03 · LT 4.2-2</div><div class="q-text">A voter reads a detailed 10-page policy analysis before deciding whom to support. This is an example of:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,2,true)">A. Central route persuasion</button><button class="q-opt" onclick="ans(this,2,false)">B. Peripheral route persuasion</button><button class="q-opt" onclick="ans(this,2,false)">C. Cognitive dissonance reduction</button><button class="q-opt" onclick="ans(this,2,false)">D. Normative social influence</button></div><div class="q-exp">Central route = careful analysis of logical arguments. Results in durable attitude change when the audience is motivated and able.</div></div>
+
+    <div class="q-card" data-q="3"><div class="q-num">Q 04 · LT 4.3-1</div><div class="q-text">People in a crowd at a comedy show begin laughing at a joke even though many didn't hear it clearly, simply because others around them are laughing. This best illustrates:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,3,true)">A. Social contagion</button><button class="q-opt" onclick="ans(this,3,false)">B. Groupthink</button><button class="q-opt" onclick="ans(this,3,false)">C. Deindividuation</button><button class="q-opt" onclick="ans(this,3,false)">D. Group polarization</button></div><div class="q-exp">Social contagion = automatic, unconscious spread of emotions/behaviors through a group — a form of conformity without deliberate choice.</div></div>
+
+    <div class="q-card" data-q="4"><div class="q-num">Q 05 · LT 4.3-2</div><div class="q-text">Which factor most significantly REDUCED obedience in Milgram's variations of the experiment?</div><div class="q-opts"><button class="q-opt" onclick="ans(this,4,false)">A. Conducting the study at a less prestigious location</button><button class="q-opt" onclick="ans(this,4,false)">B. Using a female experimenter</button><button class="q-opt" onclick="ans(this,4,true)">C. Placing the "learner" in the same room as the participant</button><button class="q-opt" onclick="ans(this,4,false)">D. Increasing the shock increments</button></div><div class="q-exp">Victim proximity dramatically reduced obedience — when the learner was in the same room, obedience fell to 40%; when participants had to physically touch the learner, it fell to 30%.</div></div>
+
+    <div class="q-card" data-q="5"><div class="q-num">Q 06 · LT 4.3-5</div><div class="q-text">After discussing gun control in like-minded groups, those who initially mildly favored stricter laws become strongly in favor, while those mildly opposed become strongly opposed. This illustrates:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,5,false)">A. Groupthink</button><button class="q-opt" onclick="ans(this,5,false)">B. Social facilitation</button><button class="q-opt" onclick="ans(this,5,true)">C. Group polarization</button><button class="q-opt" onclick="ans(this,5,false)">D. Deindividuation</button></div><div class="q-exp">Group polarization: discussion with like-minded people strengthens pre-existing attitudes, making them more extreme.</div></div>
+
+    <div class="q-card" data-q="6"><div class="q-num">Q 07 · LT 4.3-10</div><div class="q-text">Research on interpersonal attraction consistently shows that one of the most powerful predictors of friendship formation is:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,6,false)">A. Complementary personalities</button><button class="q-opt" onclick="ans(this,6,true)">B. Geographic proximity</button><button class="q-opt" onclick="ans(this,6,false)">C. Similar levels of physical attractiveness</button><button class="q-opt" onclick="ans(this,6,false)">D. Shared religious beliefs</button></div><div class="q-exp">Proximity promotes familiarity (mere exposure effect). We're most likely to befriend those we encounter frequently — dorm floor neighbors, classmates, co-workers.</div></div>
+
+    <div class="q-card" data-q="7"><div class="q-num">Q 08 · LT 4.3-11</div><div class="q-text">Long-term romantic relationships typically involve a shift from __________ to __________.</div><div class="q-opts"><button class="q-opt" onclick="ans(this,7,true)">A. Passionate love to companionate love</button><button class="q-opt" onclick="ans(this,7,false)">B. Companionate love to passionate love</button><button class="q-opt" onclick="ans(this,7,false)">C. Intrinsic motivation to extrinsic motivation</button><button class="q-opt" onclick="ans(this,7,false)">D. Peripheral persuasion to central persuasion</button></div><div class="q-exp">Passionate love (intense, aroused, novelty-based) fades over time; companionate love (deep trust, shared history) grows. Both can coexist in healthy long-term relationships.</div></div>
+
+    <div class="q-card" data-q="8"><div class="q-num">Q 09 · LT 4.5-2</div><div class="q-text">A person who is secretly jealous of a colleague's success begins telling everyone how wonderful that colleague is. This defense mechanism is:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,8,false)">A. Projection</button><button class="q-opt" onclick="ans(this,8,false)">B. Displacement</button><button class="q-opt" onclick="ans(this,8,true)">C. Reaction formation</button><button class="q-opt" onclick="ans(this,8,false)">D. Rationalization</button></div><div class="q-exp">Reaction formation = expressing the opposite of one's true, anxiety-producing feeling. Jealousy is converted into excessive praise.</div></div>
+
+    <div class="q-card" data-q="9"><div class="q-num">Q 10 · LT 4.5-3</div><div class="q-text">Karen Horney's main criticism of Freud was that he:</div><div class="q-opts"><button class="q-option" onclick="ans(this,9,false)">A. Overemphasized social factors in personality</button><button class="q-opt" onclick="ans(this,9,true)">B. Was culturally and gender-biased, especially in his theory of female development</button><button class="q-opt" onclick="ans(this,9,false)">C. Denied the existence of the unconscious mind</button><button class="q-opt" onclick="ans(this,9,false)">D. Placed too little emphasis on early childhood experiences</button></div><div class="q-exp">Horney argued Freud's theories reflected male cultural bias — she rejected "penis envy" and proposed "womb envy" as a counter. She emphasized cultural/social roots of anxiety, not biological sex drives.</div></div>
+
+    <div class="q-card" data-q="10"><div class="q-num">Q 11 · LT 4.6-3</div><div class="q-text">Which Big Five personality trait is the strongest predictor of academic and occupational success?</div><div class="q-opts"><button class="q-opt" onclick="ans(this,10,false)">A. Extraversion</button><button class="q-opt" onclick="ans(this,10,true)">B. Conscientiousness</button><button class="q-opt" onclick="ans(this,10,false)">C. Openness to experience</button><button class="q-opt" onclick="ans(this,10,false)">D. Agreeableness</button></div><div class="q-exp">Conscientiousness (organized, disciplined, dependable) is consistently the strongest Big Five predictor of academic achievement and job performance.</div></div>
+
+    <div class="q-card" data-q="11"><div class="q-num">Q 12 · LT 4.7-1</div><div class="q-text">The Yerkes-Dodson law predicts that a surgeon performing a routine procedure for the 500th time would perform BEST under:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,11,false)">A. Very low arousal</button><button class="q-opt" onclick="ans(this,11,true)">B. Moderate to high arousal</button><button class="q-opt" onclick="ans(this,11,false)">C. Extremely high arousal</button><button class="q-opt" onclick="ans(this,11,false)">D. Arousal level has no effect on well-practiced skills</button></div><div class="q-exp">For simple/well-practiced tasks, higher arousal is beneficial. Routine surgery is well-practiced, so moderate-to-high arousal (staying alert) enhances performance.</div></div>
+
+    <div class="q-card" data-q="12"><div class="q-num">Q 13 · LT 4.7-3</div><div class="q-text">Research on the need to belong indicates that social exclusion:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,12,false)">A. Only affects people with low self-esteem</button><button class="q-opt" onclick="ans(this,12,true)">B. Activates brain regions associated with physical pain</button><button class="q-opt" onclick="ans(this,12,false)">C. Has minimal effects if the excluded person has other social contacts</button><button class="q-opt" onclick="ans(this,12,false)">D. Is primarily a cultural phenomenon in individualistic societies</button></div><div class="q-exp">fMRI studies show ostracism (e.g., being excluded from Cyberball) activates the same brain regions as physical pain — supporting the fundamental, biological nature of the need to belong.</div></div>
+
+    <div class="q-card" data-q="13"><div class="q-num">Q 14 · LT 4.7-5</div><div class="q-text">A student who used to love painting starts receiving grades for art projects and gradually loses interest in painting for fun. This best illustrates:</div><div class="q-opts"><button class="q-opt" onclick="ans(this,13,false)">A. Drive-reduction theory</button><button class="q-opt" onclick="ans(this,13,false)">B. The hierarchy of needs</button><button class="q-opt" onclick="ans(this,13,true)">C. The overjustification effect</button><button class="q-opt" onclick="ans(this,13,false)">D. Social loafing</button></div><div class="q-exp">The overjustification effect: adding external rewards (grades) to an intrinsically motivating activity (painting for fun) undermines intrinsic motivation.</div></div>
+
+    <div class="q-card" data-q="14"><div class="q-num">Q 15 · LT 4.8-1</div><div class="q-text">According to the two-factor theory (Schachter-Singer), which two components combine to produce an emotion?</div><div class="q-opts"><button class="q-opt" onclick="ans(this,14,false)">A. A stimulus and a behavior</button><button class="q-opt" onclick="ans(this,14,true)">B. Physiological arousal and a cognitive label</button><button class="q-opt" onclick="ans(this,14,false)">C. A feeling and an unconscious drive</button><button class="q-opt" onclick="ans(this,14,false)">D. A stimulus and a physiological response simultaneously</button></div><div class="q-exp">Two-factor (Schachter-Singer): arousal + cognitive label = emotion. D describes Cannon-Bard (simultaneous); B is the correct two-factor answer.</div></div>
+
+    <div class="q-card" data-q="15"><div class="q-num">Q 16 · LT 4.8-3</div><div class="q-text">Paul Ekman's cross-cultural research supported the idea that:</div><div class="q-opts"><button class="q-option" onclick="ans(this,15,false)">A. Emotional expressions are entirely learned through culture</button><button class="q-opt" onclick="ans(this,15,true)">B. Facial expressions for basic emotions are universal across cultures</button><button class="q-opt" onclick="ans(this,15,false)">C. Only Western cultures share emotional expressions</button><button class="q-opt" onclick="ans(this,15,false)">D. Gestures, not facial expressions, are universal</button></div><div class="q-exp">Ekman showed that people in isolated tribal cultures (no TV or media exposure) recognized the same 6 basic emotions from facial photographs — strong evidence for biologically universal expressions.</div></div>
+
+    <div class="q-card" data-q="16"><div class="q-num">Q 17 · LT 4.8-8</div><div class="q-text">Which aspect of nonverbal communication varies significantly across cultures, while another is relatively universal?</div><div class="q-opts"><button class="q-opt" onclick="ans(this,16,true)">A. Gestures vary; basic facial expressions are universal</button><button class="q-opt" onclick="ans(this,16,false)">B. Facial expressions vary; gestures are universal</button><button class="q-opt" onclick="ans(this,16,false)">C. Both gestures and facial expressions are universal</button><button class="q-opt" onclick="ans(this,16,false)">D. Both gestures and facial expressions vary across cultures</button></div><div class="q-exp">Gestures (thumbs up, OK sign) vary greatly by culture — some are offensive in different regions. But basic facial expressions (Ekman's 6) are recognized universally.</div></div>
+
+    <div class="q-card" data-q="17"><div class="q-num">Q 18 · LT 4.8-9</div><div class="q-text">The "pen-in-mouth" study by Strack supports which theory?</div><div class="q-opts"><button class="q-opt" onclick="ans(this,17,false)">A. Cannon-Bard theory</button><button class="q-opt" onclick="ans(this,17,false)">B. Schachter-Singer two-factor theory</button><button class="q-opt" onclick="ans(this,17,true)">C. Facial feedback hypothesis</button><button class="q-opt" onclick="ans(this,17,false)">D. Cognitive appraisal theory</button></div><div class="q-exp">Facial feedback: forcing facial muscles into a smile (pen between teeth) increased enjoyment of cartoons — facial expressions influence emotions, not just reflect them.</div></div>
+
+    <div class="q-score" id="qscore">
+      <div class="score-lbl">Your Score</div>
+      <div class="score-big" id="sbig">—</div>
+      <div id="smsg" style="font-size:0.83rem;margin-top:0.35rem;color:#c0a880;"></div>
+      <button class="btn" onclick="resetQ()">Try Again</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// NAV
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ACCORDION
+function tog(btn){ btn.closest('.accordion-item').classList.toggle('open'); }
+
+// QUIZ
+let qAns=new Array(18).fill(null), qDone=new Array(18).fill(false);
+function ans(btn,i,correct){
+  if(qDone[i])return;
+  qDone[i]=true; qAns[i]=correct;
+  const card=btn.closest('.q-card');
+  card.querySelectorAll('.q-opt').forEach(o=>{
+    o.style.pointerEvents='none';
+    if(o!==btn && o.getAttribute('onclick') && o.getAttribute('onclick').includes('true')) o.classList.add('show-c');
+  });
+  btn.classList.add(correct?'correct':'wrong');
+  card.querySelector('.q-exp').classList.add('show');
+  if(qDone.every(d=>d)) setTimeout(showScore,600);
+}
+function showScore(){
+  const c=qAns.filter(a=>a===true).length;
+  document.getElementById('sbig').textContent=`${c} / 18`;
+  const msgs=['Keep reviewing — go back through each section!','Getting there — focus on missed areas.','Good work — review any wrong answers carefully.','Strong performance — almost AP-ready!','Excellent! AP exam ready 🎯'];
+  document.getElementById('smsg').textContent=msgs[Math.min(Math.floor(c/3.6),4)];
+  const s=document.getElementById('qscore');
+  s.classList.add('show');
+  s.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQ(){
+  qAns=new Array(18).fill(null); qDone=new Array(18).fill(false);
+  document.querySelectorAll('.q-opt').forEach(o=>{o.classList.remove('correct','wrong','show-c');o.style.pointerEvents='';});
+  document.querySelectorAll('.q-exp').forEach(e=>e.classList.remove('show'));
+  document.getElementById('qscore').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// FLASHCARDS
+const fcData=[
+  {t:'Fundamental Attribution Error',d:'When judging others, overestimating dispositional causes and underestimating situational causes.'},
+  {t:'Self-Serving Bias',d:'Attributing successes to internal factors and failures to external factors to protect self-esteem.'},
+  {t:'Explicit vs. Implicit Prejudice',d:'Explicit = conscious, deliberate bias. Implicit = unconscious, automatic bias measured by the IAT.'},
+  {t:'Social Comparison',d:'Evaluating our opinions and abilities by comparing ourselves to others (Festinger).'},
+  {t:'Cognitive Dissonance',d:'Discomfort from conflicting cognitions; motivates attitude or behavior change (Festinger, 1957).'},
+  {t:'Central Route Persuasion',d:'Attitude change via careful logical analysis; produces durable change in motivated audiences.'},
+  {t:'Peripheral Route Persuasion',d:'Attitude change via superficial cues (attractiveness, authority); produces temporary change.'},
+  {t:'Social Contagion',d:'Automatic, unconscious spread of behaviors, emotions, or ideas through a group.'},
+  {t:'Normative Social Influence',d:'Conforming to be liked or accepted, even while privately disagreeing.'},
+  {t:'Informational Social Influence',d:'Conforming because you believe others have more accurate information about reality.'},
+  {t:'Group Polarization',d:'Discussion with like-minded people strengthens pre-existing attitudes, making them more extreme.'},
+  {t:'Groupthink',d:'Cohesive groups prioritize harmony over critical thinking; dissent is suppressed (Janis).'},
+  {t:'Frustration-Aggression Principle',d:'Blocked goals create frustration that increases likelihood of aggressive behavior (Dollard).'},
+  {t:'Bystander Effect',d:'Greater number of bystanders decreases individual likelihood of helping (Darley & Latané).'},
+  {t:'Social Exchange Theory',d:'We help when perceived benefits (approval, reciprocity) outweigh costs (time, risk).'},
+  {t:'Superordinate Goals',d:'Shared goals requiring cooperation between rival groups; most effective way to reduce intergroup conflict.'},
+  {t:'Passionate vs. Companionate Love',d:'Passionate = intense, aroused longing; peaks early. Companionate = deep trust and attachment; grows over time.'},
+  {t:'Id / Ego / Superego',d:'Freud: Id (unconscious drives/pleasure), Ego (rational mediator/reality), Superego (internalized morals).'},
+  {t:'Reaction Formation',d:'Expressing the opposite of one\'s true, anxiety-producing feelings (defense mechanism).'},
+  {t:'Projection',d:'Attributing your own unacceptable feelings to someone else (defense mechanism).'},
+  {t:'Displacement',d:'Redirecting impulses from the real target to a safer substitute (defense mechanism).'},
+  {t:'Sublimation',d:'Channeling unacceptable impulses into socially valued activities — the most mature defense mechanism.'},
+  {t:'Collective Unconscious',d:'Jung\'s concept: shared, inherited reservoir of archetypes across all of humanity.'},
+  {t:'Unconditional Positive Regard',d:'Rogers: full, non-judgmental acceptance; key condition for psychological growth and congruence.'},
+  {t:'Self-Actualization',d:'Maslow\'s highest need — fulfilling one\'s greatest potential after lower needs are met.'},
+  {t:'Big Five — OCEAN',d:'Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism — the five broad personality traits.'},
+  {t:'Reciprocal Determinism',d:'Bandura: personality emerges from mutual interaction of person (cognitions), behavior, and environment.'},
+  {t:'Self-Efficacy',d:'Bandura: belief in one\'s ability to succeed at a specific task; predicts effort and persistence.'},
+  {t:'Overjustification Effect',d:'Adding external rewards to an intrinsically motivating activity reduces intrinsic motivation.'},
+  {t:'Yerkes-Dodson Law',d:'Performance peaks at moderate arousal; complex tasks need lower arousal; simple tasks benefit from higher arousal.'},
+  {t:'Need to Belong',d:'Baumeister: fundamental human motivation for frequent, positive, stable social connections.'},
+  {t:'Ghrelin & Leptin',d:'Ghrelin (stomach) triggers hunger; Leptin (fat cells) signals fullness to the hypothalamus.'},
+  {t:'James-Lange Theory',d:'Stimulus → physiological response → emotion. We feel afraid because we notice we are trembling.'},
+  {t:'Cannon-Bard Theory',d:'Stimulus → simultaneous emotion AND physiological response. Feelings and body arousal are independent parallel processes.'},
+  {t:'Schachter-Singer Two-Factor Theory',d:'Emotion = physiological arousal + cognitive label. Same arousal can be interpreted as different emotions based on context.'},
+  {t:'Facial Feedback Hypothesis',d:'Facial expressions don\'t just reflect emotions — they also influence them. Smiling can make you feel happier.'},
+  {t:'Basic Emotions (Ekman)',d:'6 universally recognized emotions: happiness, sadness, fear, anger, disgust, surprise. Cross-culturally universal.'},
+  {t:'Polygraph',d:'Measures physiological arousal — unreliable lie detector because arousal reflects many emotions, not just guilt.'},
+  {t:'Mirror-Image Perceptions',d:'Conflicting parties each see themselves as righteous and the other as evil; fuels conflict cycles.'},
+  {t:'Stereotype Threat',d:'Awareness of a negative group stereotype disrupts performance on tasks related to that stereotype (Steele & Aronson).'},
+];
+
+let fcIdx=0, fcFlipped=false, fcOrder=[...Array(fcData.length).keys()];
+function updateFC(){
+  document.getElementById('fc').classList.remove('flipped'); fcFlipped=false;
+  document.getElementById('fc-t').textContent=fcData[fcOrder[fcIdx]].t;
+  document.getElementById('fc-d').textContent=fcData[fcOrder[fcIdx]].d;
+  document.getElementById('fc-c').textContent=`${fcIdx+1} of ${fcData.length}`;
+}
+function flipFC(){ fcFlipped=!fcFlipped; document.getElementById('fc').classList.toggle('flipped',fcFlipped); }
+function nextFC(){ fcIdx=(fcIdx+1)%fcData.length; updateFC(); }
+function prevFC(){ fcIdx=(fcIdx-1+fcData.length)%fcData.length; updateFC(); }
+function shuffleFC(){
+  for(let i=fcOrder.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]]; }
+  fcIdx=0; updateFC();
+}
+updateFC();
+</script>
+</body>
+</html>
